@@ -29,11 +29,12 @@ import { TfiWrite } from 'react-icons/tfi';
 import 'react-quill/dist/quill.snow.css';
 import * as z from 'zod';
 import toast from 'react-hot-toast';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import { PaxContext } from '@/context/context';
 
 export function NewPostModal({ openModal, setOpenModal, requestType }: any) {
   const t = useTranslations('main');
-
+  const { lastCommand } = useContext(PaxContext);
   const socket = useRef<WebSocket>();
   const formSchema = z.object({
     title: z.string().min(1, t('title_is_required')),
@@ -55,41 +56,8 @@ export function NewPostModal({ openModal, setOpenModal, requestType }: any) {
   });
 
   useEffect(() => {
-    const wsProtocol = 'wss:';
-    socket.current = new WebSocket(
-      `${wsProtocol}//${process.env.NEXT_PUBLIC_SOCKET_URL}/socket.io/`
-    );
-
-    const pingIntervalId = setInterval(() => {
-      if (socket.current?.readyState === WebSocket.OPEN) {
-        const pingData = JSON.stringify({
-          messageType: 'ping',
-          data: [],
-        });
-        socket.current?.send(pingData);
-      }
-    }, 50000);
-
-    const onMessage = (event: MessageEvent) => {
-      try {
-        const data = JSON.parse(event.data);
-
-        if (data.command === 'BalanceAdded') {
-          setOpenModal(false);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    socket.current.onmessage = onMessage;
-
-    return () => {
-      clearInterval(pingIntervalId);
-      socket.current?.removeEventListener('message', onMessage);
-      socket.current?.close();
-    };
-  }, []);
+    if (lastCommand === 'BalanceAdded') setOpenModal(false);
+  }, [lastCommand]);
 
   const submitBlog = async (data: FormData) => {
     setOpenModal(false);

@@ -27,6 +27,7 @@ const Providers: React.FC<IProps> = ({ children }) => {
   const [postMode, setPostMode] = useState<string>('all');
   const [currentPlan, setCurrentPlan] = useState<string>('BASIC');
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [lastCommand, setLastCommand] = useState<string>('');
   const locale = useLocale();
   const [userFetchURL, setUserFetchURL] = useState<string>(
     `/api/users/me?language=${locale}`
@@ -83,7 +84,9 @@ const Providers: React.FC<IProps> = ({ children }) => {
         console.log('Socket message: ', received.data);
         try {
           const data = JSON.parse(received.data);
-
+          if (data?.command) {
+            setLastCommand(data?.command);
+          }
           if (data?.session) {
             console.log('Socket message: ', data?.session);
             setCookie(null, 'session', data?.session, {
@@ -120,6 +123,7 @@ const Providers: React.FC<IProps> = ({ children }) => {
         user,
         setUser,
         userMutate,
+        lastCommand,
         postMode,
         setPostMode,
         currentPlan,
