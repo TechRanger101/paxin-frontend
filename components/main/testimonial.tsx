@@ -11,7 +11,7 @@ const data = [
     fullname: 'Jane Doe',
     username: 'janedoe5',
     comment:
-      "Trading with paxintradeONLINE has been a game-changer! Their platform is filled with opportunities, and the support team goes above and beyond. I've seen exceptional profits since I joined. Thank you, paxintradeONLINE! ",
+      "Trading with Paxintrade has been a game-changer! Their platform is filled with opportunities, and the support team goes above and beyond. I've seen exceptional profits since I joined. Thank you, Paxintrade! ",
     timestamp: '2 days ago',
   },
   {
@@ -19,7 +19,7 @@ const data = [
     fullname: 'John Doe',
     username: 'johndoe',
     comment:
-      'Trading with paxintradeONLINE has been an amazing experience. The platform is super user-friendly, and the customer support is top-notch. Highly recommended!',
+      'Trading with Paxintrade has been an amazing experience. The platform is super user-friendly, and the customer support is top-notch. Highly recommended!',
 
     timestamp: '2 days ago',
   },
@@ -28,7 +28,7 @@ const data = [
     fullname: 'Jane Doe',
     username: 'janedoe1',
     comment:
-      'I am extremely happy with my decision to trade with paxintradeONLINE. Their platform offers a wide variety of options and the support team is always there to assist.',
+      'I am extremely happy with my decision to trade with Paxintrade. Their platform offers a wide variety of options and the support team is always there to assist.',
     timestamp: '2 days ago',
   },
   {
@@ -36,7 +36,7 @@ const data = [
     fullname: 'Jane Doe',
     username: 'janedoe2',
     comment:
-      "paxintradeONLINE has truly transformed my trading journey. The platform is intuitive and packed with features. Their responsive customer support makes it even better. I'm impressed!",
+      "Paxintrade has truly transformed my trading journey. The platform is intuitive and packed with features. Their responsive customer support makes it even better. I'm impressed!",
     timestamp: '2 days ago',
   },
   {
@@ -44,7 +44,7 @@ const data = [
     fullname: 'Jane Doe',
     username: 'janedoe3',
     comment:
-      "I can't thank paxintradeONLINE enough for their exceptional services. Their platform is robust and secure, and the educational resources have helped me improve my trading skills significantly. Great job!",
+      "I can't thank Paxintrade enough for their exceptional services. Their platform is robust and secure, and the educational resources have helped me improve my trading skills significantly. Great job!",
     timestamp: '2 days ago',
   },
   {
@@ -52,7 +52,7 @@ const data = [
     fullname: 'Jane Doe',
     username: 'janedoe4',
     comment:
-      "Trading with paxintradeONLINE has been a game-changer! Their platform is filled with opportunities, and the support team goes above and beyond. I've seen exceptional profits since I joined. Thank you, paxintradeONLINE! ",
+      "Trading with Paxintrade has been a game-changer! Their platform is filled with opportunities, and the support team goes above and beyond. I've seen exceptional profits since I joined. Thank you, Paxintrade! ",
     timestamp: '2 days ago',
   },
 ];

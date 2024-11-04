@@ -173,7 +173,7 @@ export default function ChatMessage(props: ChatMessageProps) {
                   height={40.44}
                   className='hidden !size-5 !min-w-5 !max-w-5 dark:block'
                 />
-                <span>paxintradeONLINE</span>
+                <span>Paxintrade</span>
               </div>
               <span className='line-clamp-1 !text-xs text-muted-foreground dark:text-muted-foreground'>
                 {t('click_to_join_the_conference')}

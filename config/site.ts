@@ -70,7 +70,7 @@ export const siteConfig = {
     resources: [
       {
         title: 'community',
-        href: 'https://t.me/paxintradeonline',
+        href: 'https://t.me/Paxintrade',
       },
       // {
       //   title: 'discord',

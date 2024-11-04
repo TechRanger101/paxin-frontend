@@ -98,7 +98,7 @@ const initialState: ISession = {
       },
       copyright_conf: {
         display: true,
-        text: 'Powered by <a href="https://www.paxintrade.com" target="_blank">paxintradeONLINE</a>',
+        text: 'Powered by <a href="https://www.paxintrade.com" target="_blank">Paxintrade</a>',
       },
     },
   },
