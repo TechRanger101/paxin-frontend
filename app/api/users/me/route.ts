@@ -2,31 +2,41 @@ import authOptions from '@/lib/authOptions';
 import { getServerSession } from 'next-auth';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import cookie from 'cookie';
 
 export async function GET(req: NextRequest) {
   const locale = req.nextUrl.searchParams.get('language') || 'en';
 
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  let accessToken = session?.accessToken;
+  if (!accessToken) {
+    const cookies = headers().get('cookie') || '';
+    const parsedCookies = cookie.parse(cookies);
+    accessToken = parsedCookies.access_token;
   }
 
-  cookies().set('access_token', session?.accessToken || '', {
-    path: '/',
-    maxAge: 60 * 60 * 24 * 30,
-    domain:
-      process.env.NODE_ENV === 'production' ? '.paxintrade.com' : 'localhost',
-    httpOnly: false,
-    secure: process.env.NODE_ENV === 'production',
-  });
+  if (!accessToken) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+
+  // cookies().set('access_token', accessToken || '', {
+  //   path: '/',
+  //   maxAge: 60 * 60 * 24 * 30,
+  //   domain:
+  //     process.env.NODE_ENV === 'production' ? '.paxintrade.online' : 'localhost',
+  //   httpOnly: false,
+  //   secure: process.env.NODE_ENV === 'production',
+  // });
 
   try {
     const res = await fetch(
       `${process.env.API_URL}/api/users/me?language=${locale}`,
       {
         headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );

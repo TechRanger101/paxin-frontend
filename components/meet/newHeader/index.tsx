@@ -24,7 +24,7 @@ export function MeetHeader({ id, user }: Props) {
   return (
     <header className={`bg-h sticky top-0 z-40 w-full bg-background`}>
       <div className='border-gardient-h relative top-[80px] w-full'></div>
-      <div className='flex h-20 items-center space-x-4 px-2 sm:justify-between sm:space-x-0 md:px-8'>
+      <div className='flex h-14 items-center space-x-4 px-2 sm:justify-between sm:space-x-0 md:px-4'>
         <MainNav id={id} />
         <div className='flex flex-1 items-center justify-end space-x-4'>
           <nav className='hidden items-center space-x-2 sm:flex'>
@@ -46,7 +46,7 @@ export function MeetHeader({ id, user }: Props) {
       <div className='absolute left-[55%] top-[20px] flex h-12 justify-between sm:hidden'>
         <div className='mx-auto my-auto flex flex-row content-center justify-start'>
           <p className='leading-8'>{id.slice(0, 6)}</p>
-          <CopyClipboard text={`https://www.paxintrade.com/meet/${id}`}>
+          <CopyClipboard text={`https://www.paxintrade.online/meet/${id}`}>
             <div className='notepad my-auto inline-block h-8 w-8 items-center justify-center rounded-full px-2 py-1'>
               <i className='pnm-notepad h-4 w-4 text-primaryColor dark:text-secondaryColor' />
             </div>

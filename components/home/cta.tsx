@@ -26,6 +26,7 @@ export function CTASection() {
       : ''
   );
 
+  //test
   const handleSearch = useDebouncedCallback((value: string) => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set('title', value.trim() || 'all');
@@ -46,12 +47,12 @@ export function CTASection() {
   }, [viewMode]);
 
   return (
-    <div className='container fixed bottom-0 top-[calc(100dvh_-_6.2rem)] z-20 mx-auto flex h-[100px] w-full flex-col-reverse items-center justify-start gap-2 bg-white  pb-[20px] pl-[10px] pr-[25px] pt-[10px] dark:bg-black sm:flex-row sm:justify-between md:sticky md:top-[80px] md:pl-[10px] md:pr-[10px] '>
+    <div className='container fixed bottom-0 top-[calc(100dvh_-_6.2rem)] z-20 mx-auto flex h-[100px] w-full flex-col-reverse items-center justify-start gap-2 bg-white  pb-[10px] dark:bg-black sm:flex-row sm:justify-between md:sticky md:top-[50px] md:pb-[0px] '>
       <ToggleGroup
         type='single'
         variant='outline'
         value={searchParams.get('mode') || 'flow'}
-        className='w-full gap-0 rounded-lg  pl-[90px] md:pl-[110px]'
+        className='w-full gap-0 rounded-lg  pl-[0px] md:pl-[0px]'
         onValueChange={(value: string) => {
           if (value) {
             router.push(`?mode=${value}`);
@@ -72,8 +73,8 @@ export function CTASection() {
         </ToggleGroupItem>
       </ToggleGroup>
 
-      <div className='absolute -left-[10px] -top-[10px] flex w-full flex-row-reverse justify-between gap-3 bg-white px-4 pt-2 dark:bg-black md:static md:flex-row md:pt-0'>
-        <div className='relative w-[-webkit-fill-available] md:w-[15rem] lg:w-[30rem]'>
+      <div className='w-auto gap-3 bg-white px-0 py-0 dark:bg-black md:static md:flex-row md:pt-0'>
+        <div className='relative  flex w-[-webkit-fill-available] gap-2 md:w-[15rem] lg:w-[30rem]'>
           <Search className='absolute inset-y-0 left-3 my-auto size-4 text-gray-500' />
           <Input
             type='text'
@@ -85,8 +86,8 @@ export function CTASection() {
               handleSearch(e.target.value);
             }}
           />
+          <FilterModal />
         </div>
-        <FilterModal />
       </div>
     </div>
   );

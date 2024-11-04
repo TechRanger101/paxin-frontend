@@ -46,13 +46,13 @@ export default function ChatHeader() {
         <p className='text-xs text-gray-500'>
           {chatUser?.isTyping ? (
             <>
-              is typing
+              Печатает
               <TypingDots />
             </>
           ) : chatUser?.online ? (
-            'online'
+            'Онлайн'
           ) : (
-            'last seen ' +
+            'Активность ' +
             format.relativeTime(
               chatUser?.lastOnlineTimestamp
                 ? new Date(chatUser?.lastOnlineTimestamp) > currentTime

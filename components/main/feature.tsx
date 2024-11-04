@@ -63,7 +63,7 @@ function FeatureCard({
         className='absolute left-0 top-0 z-[-1] size-full rounded-none opacity-0 transition-opacity duration-500 group-hover:opacity-100 md:rounded-xl'
         style={{
           background:
-            'linear-gradient(90deg, #00B887 0%, #01B6D3 100%), linear-gradient(7deg, #7B2BCC 21.22%, #2296F3 88.72%)',
+            'radial-gradient(100% 100% at 50% 50%, rgb(183 204 236) 0%, rgba(8, 102, 255, 0.58) 100%), rgb(255 255 255/ 50%)',
         }}
       ></div>
       <div className='flex flex-1 flex-col overflow-hidden rounded-none transition-[background-opacity]  md:rounded-xl'>
@@ -113,14 +113,14 @@ export default function FeatureSection() {
   const t = useTranslations('main');
 
   return (
-    <div className='flex flex-col items-start justify-center px-0 md:items-center'>
-      <div className='px-7'>
+    <div className='flex flex-col items-start justify-center px-0 md:items-center pt-8'>
+      {/* <div className='px-7'>
         <SectionBadge>{t('navigating_your_digital_universe')}</SectionBadge>
-      </div>
-      <SectionTitle className='px-7 text-left leading-[30px] md:text-center'>
+      </div> */}
+      <SectionTitle className='px-4 text-left leading-[30px] md:text-center'>
         {t('unleashing_future_online_interaction')}
       </SectionTitle>
-      <SectionDescription className='max-w-full px-7 pb-[36px] text-left md:text-center'>
+      <SectionDescription className='max-w-full px-4 pb-[36px] text-left md:text-center'>
         {t('unleashing_future_online_interaction_description')}
       </SectionDescription>
       <div className='grid grid-cols-1 gap-8 px-0 pb-[0px] sm:grid-cols-2 md:px-7 md:pb-[0px] xl:grid-cols-4'>

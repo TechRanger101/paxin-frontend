@@ -1,3 +1,5 @@
+import { headers } from 'next/headers';
+import cookie from 'cookie';
 import { ComplainModal } from '@/components/common/complain-modal';
 import { CopyButton } from '@/components/common/copy-button';
 import { ReportModal } from '@/components/common/report-modal';
@@ -7,6 +9,11 @@ import { UpvoteCard } from '@/components/home/flow/upvote-card';
 import MessageForm from '@/components/home/messsage-form';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import dynamic from 'next/dynamic';
+const CartButton = dynamic(() => import('@/components/cart/CartButton'), {
+  ssr: false,
+});
+
 import {
   Card,
   CardContent,
@@ -24,15 +31,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BiSolidCategory } from 'react-icons/bi';
 import { FaExclamation, FaTelegramPlane } from 'react-icons/fa';
-import { FaSackDollar } from 'react-icons/fa6';
+import { FaRubleSign } from 'react-icons/fa6';
 import { IoEyeSharp, IoFlagOutline } from 'react-icons/io5';
-import { MdOutlineHouseSiding } from 'react-icons/md';
+import {
+  MdOutlineHouseSiding,
+  MdFavoriteBorder,
+  MdOutlineFavorite,
+} from 'react-icons/md';
 import { RxCopy } from 'react-icons/rx';
+import { CiStreamOn, CiStreamOff } from 'react-icons/ci';
 
 interface BlogDetails {
   id: number;
   title: string;
   description: string;
+  streaming: string[];
   content: string;
   review: {
     views: number;
@@ -58,6 +71,7 @@ interface BlogDetails {
   categories: string[];
   cities: string[];
   countrycode: string;
+  uniqId: string;
   me: boolean;
 }
 
@@ -66,9 +80,18 @@ interface FlowPageProps {
   searchParams: { [key: string]: string | undefined | null };
 }
 
-async function getData(locale: string, id: string, slug: string) {
-  const session = await getServerSession(authOptions);
+interface Favorite {
+  ID: number;
+  UserID: string;
+  BlogID: number;
+}
 
+async function getData(
+  locale: string,
+  id: string,
+  slug: string,
+  userId: string | null
+) {
   try {
     const res = await fetch(
       `${process.env.API_URL}/api/blog/${slug}?language=${locale}`,
@@ -85,8 +108,6 @@ async function getData(locale: string, id: string, slug: string) {
 
     const blogData = await res.json();
 
-    console.log(blogData.data[0].user, '++++');
-
     const voteRes = await fetch(
       `${process.env.API_URL}/api/blog/allvotes/${blogData.data[0].id}`
     );
@@ -101,8 +122,40 @@ async function getData(locale: string, id: string, slug: string) {
       throw new Error('Failed to fetch data');
     }
 
+    const headersList = headers();
+    const cookiesHeader = headersList.get('cookie');
+    const cookiesParsed = cookiesHeader ? cookie.parse(cookiesHeader) : {};
+    const token = cookiesParsed['access_token'];
+    const favoriteRes = await fetch(`${process.env.API_URL}/api/blog/getFav`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log(response);
+        } else {
+          console.error('err:', response.statusText);
+        }
+      })
+      .catch((error) => {
+        console.error('err:', error);
+      });
+
+    // console.log(favoriteRes)
+    // if (favoriteRes.status !== 'success') {
+    //   throw new Error('Failed to fetch data');
+    // }
+
+    // const favoriteData = await favoriteRes.json();
+    // console.log(favoriteData)
+
+    // const isFavorite = favoriteData.data.some((fav: Favorite) => fav.BlogID === blogData.data[0].id);
+
     const blog = {
       id: blogData.data[0].id,
+      streaming: blogData?.data[0]?.userProfile?.streaming?.[0]?.RoomID || null,
       title:
         blogData.data[0].multilangtitle[
           locale.charAt(0).toUpperCase() + locale.slice(1)
@@ -121,24 +174,22 @@ async function getData(locale: string, id: string, slug: string) {
         downvotes:
           voteData.votes.filter((item: any) => !item?.IsUP).length || 0,
       },
-      vote: voteData.votes.find(
-        (item: any) => item?.UserID === session?.user?.id
-      )?.IsUP
+      vote: voteData.votes.find((item: any) => item?.UserID === userId)?.IsUP
         ? 1
-        : voteData.votes.find((item: any) => item?.UserID === session?.user?.id)
-              ?.IsUP === false
+        : voteData.votes.find((item: any) => item?.UserID === userId)?.IsUP ===
+            false
           ? -1
           : 0,
       gallery: blogData.data[0].photos[0].files.map((file: any) => {
         return {
-          original: `https://proxy.paxintrade.com/400/https://img.paxintrade.com/${file.path}`,
-          thumbnail: `https://proxy.paxintrade.com/50/https://img.paxintrade.com/${file.path}`,
+          original: `https://proxy.paxintrade.online/400/https://img.paxintrade.online/${file.path}`,
+          thumbnail: `https://proxy.paxintrade.online/50/https://img.paxintrade.online/${file.path}`,
         };
       }),
       author: {
         username: blogData.data[0].user.name,
         userId: blogData.data[0].user.userID,
-        avatar: `https://proxy.paxintrade.com/100/https://img.paxintrade.com/${blogData.data[0].user.photo}`,
+        avatar: `https://proxy.paxintrade.online/100/https://img.paxintrade.online/${blogData.data[0].user.photo}`,
         bio: blogData.data[0].userProfile.multilangtitle[
           locale.charAt(0).toUpperCase() + locale.slice(1)
         ],
@@ -149,14 +200,17 @@ async function getData(locale: string, id: string, slug: string) {
       },
       price: blogData.data[0].total,
       link: `/${blogData.data[0].uniqId}/${blogData.data[0].slug}`,
+      uniqId: blogData.data[0].uniqId,
       hashtags: blogData.data[0].hashtags,
       categories: blogData.data[0].catygory.map(
         (catygory: any) => catygory.name
       ),
       cities: blogData.data[0].city.map((city: any) => city.name),
       countrycode: blogData.data[0].lang,
-      me: session?.user?.id === blogData.data[0].user.userID,
+      me: userId === blogData.data[0].user.userID,
+      // isFavorite: isFavorite,
     };
+    console.log(blog);
 
     return blog;
   } catch (error) {
@@ -167,10 +221,19 @@ async function getData(locale: string, id: string, slug: string) {
 export async function generateMetadata({
   params,
 }: FlowPageProps): Promise<Metadata> {
+  const headersList = headers();
+  const cookiesHeader = headersList.get('cookie');
+  const cookiesParsed = cookiesHeader ? cookie.parse(cookiesHeader) : {};
+  const userIdCookie = cookiesParsed['UserID'];
+  const token = cookiesParsed['access_token'];
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id || userIdCookie || null;
+
   const blogDetails: BlogDetails | null = await getData(
     params.locale,
     params.id,
-    params.slug
+    params.slug,
+    userId
   );
 
   return {
@@ -188,17 +251,20 @@ export async function generateMetadata({
 export default async function FlowPage({
   params,
   searchParams,
-}: {
-  params: { id: string; slug: string; locale: string };
-  searchParams: { [key: string]: string | undefined | null };
-}) {
+}: FlowPageProps) {
   const t = await getTranslations('main');
+  const headersList = headers();
+  const cookiesHeader = headersList.get('cookie');
+  const cookiesParsed = cookiesHeader ? cookie.parse(cookiesHeader) : {};
+  const userIdCookie = cookiesParsed['UserID'];
   const session = await getServerSession(authOptions);
+  const userId = session?.user?.id || userIdCookie || null;
 
   const blogDetails: BlogDetails | null = await getData(
     params.locale,
     params.id,
-    params.slug
+    params.slug,
+    userId
   );
 
   const roomId = await getRoomId(blogDetails?.author?.userId || '');
@@ -207,12 +273,7 @@ export default async function FlowPage({
     <section className='container px-4 py-4 md:px-8'>
       <div className='flex justify-between'>
         <BackButton callback={searchParams['callback']} />
-        {/* <span className='flex items-center justify-center px-0 uppercase'>
-          <IoLanguage className='h-[32px] w-[32px] px-2' />
-          {blogDetails?.countrycode}
-        </span> */}
       </div>
-      {/* <Breadcrumb contents={breadcrumbs} /> */}
       <div className='font-satoshi'>
         <div className='flex gap-3 pb-2 text-xl font-semibold text-secondary-foreground'>
           {blogDetails?.title}
@@ -221,20 +282,19 @@ export default async function FlowPage({
           {blogDetails?.description}
         </div>
       </div>
-      {/* <div className='my-4 max-w-[390px]'>
-        <TagSlider tags={blogDetails?.hashtags || []} mode='flow' />
-      </div> */}
-
       <div className='my-4 grid gap-4 md:grid-cols-3 xl:grid-cols-3'>
         <div className='md:col-span-2 xl:col-span-2'>
           <div className='grid gap-4 md:grid-cols-2 xl:grid-cols-3'>
             <div className='col-span-2 grid grid-cols-2 gap-2 xl:col-span-3'>
               <div>
-                <div className='flex items-center gap-2 '>
+                <div className='flex flex-wrap items-center gap-2 '>
                   <MdOutlineHouseSiding className='size-5' />
                   {t('city')}
                 </div>
-                <div className='flex gap-2'>
+                <div
+                  className='flex flex-wrap gap-2'
+                  style={{ overflowWrap: 'anywhere' }}
+                >
                   {blogDetails.cities &&
                     blogDetails.cities.map((city: string) => (
                       <Link
@@ -253,11 +313,14 @@ export default async function FlowPage({
                 </div>
               </div>
               <div>
-                <div className='flex items-center gap-2'>
+                <div className='flex flex-wrap items-center gap-2 overflow-hidden'>
                   <BiSolidCategory className='size-4' />
                   {t('category')}
                 </div>
-                <div className='flex gap-2'>
+                <div
+                  className='flex flex-wrap gap-2'
+                  style={{ overflowWrap: 'anywhere' }}
+                >
                   {blogDetails.categories &&
                     blogDetails.categories.map((category: string) => (
                       <Link
@@ -278,7 +341,7 @@ export default async function FlowPage({
               {blogDetails.price !== 0 && (
                 <div>
                   <div className='flex items-center gap-2'>
-                    <FaSackDollar className='size-4' />
+                    <FaRubleSign className='size-4' />
                     {t('price')}
                   </div>
                   <div className='flex gap-2'>
@@ -291,9 +354,9 @@ export default async function FlowPage({
                         variant='outline'
                         className='max-w-full rounded-full bg-primary/10 px-4 text-primary hover:border-primary'
                       >
-                        {blogDetails.price?.toLocaleString('en-US', {
+                        {blogDetails.price?.toLocaleString('ru-RU', {
                           style: 'currency',
-                          currency: 'USD',
+                          currency: 'RUB',
                           maximumFractionDigits: 0,
                         })}
                       </Badge>
@@ -316,48 +379,27 @@ export default async function FlowPage({
                 </div>
               </div>
             </div>
-            {/* <CardContent className='px-6 pt-4 font-satoshi'>
-              <div className='flex flex-col items-center'>
-                <UpvoteCard
-                  id={blogDetails.id}
-                  vote={blogDetails.vote}
-                  upvotes={blogDetails.review?.upvotes}
-                  downvotes={blogDetails.review?.downvotes}
-                  me={blogDetails.me}
-                />
-                <div className='text-xl font-semibold'>{t('scan_code')}</div>
-                <div className='text-center text-sm'>
-                  {t('scan_code_description')}
-                </div>
-                <QRCode
-                  value={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${params.id}/${params.slug}`}
-                  className='mt-4 w-[200px]'
-                />
-         
-              </div>
-              <div className='relative my-2 flex w-full justify-center'>
-                <div className='absolute top-[50%] z-[-1] h-[2px] w-full rounded-full bg-muted'></div>
-                <div className='bg-background px-4'>{t('or')}</div>
-              </div>
-              <div className='flex items-center justify-between gap-3'>
-                <Input
-                  type='text'
-                  placeholder='Enter the code'
-                  value={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${params.id}/${params.slug}`}
-                  readOnly
-                />
-                <CopyButton
-                  variant='outline'
-                  size='icon'
-                  text={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${params.id}/${params.slug}`}
-                >
-                  <RxCopy className='size-4' />
-                </CopyButton>
-              </div>
-            </CardContent> */}
           </div>
           <Separator className='my-4' />
           <div className='block md:hidden'>
+            <div className='absolute z-10'>
+              {blogDetails?.streaming?.length > 0 ? (
+                <Link
+                  href={`/stream/${blogDetails.streaming}`}
+                  className='stream-item'
+                >
+                  <div className='flex items-center justify-start  bg-red-500 px-2 text-white'>
+                    <CiStreamOn className='mr-2' />
+                    <span>В эфире</span>
+                  </div>
+                </Link>
+              ) : (
+                <div className='flex items-center justify-start bg-black/50 px-2 text-white'>
+                  <CiStreamOff className='mr-2' />
+                  <span>Вне эфира</span>
+                </div>
+              )}
+            </div>
             <FlowImageGallery images={blogDetails?.gallery || []} />
           </div>
           <div>
@@ -368,49 +410,45 @@ export default async function FlowPage({
               className='mt-2 text-muted-foreground'
               dangerouslySetInnerHTML={{ __html: blogDetails.content }}
             />
+            {blogDetails.price !== 0 && (
+              <div className='mt-4'>
+                {/* Вставляем кнопку корзины */}
+                <CartButton
+                  id={blogDetails.uniqId}
+                  title={blogDetails.title}
+                  price={blogDetails.price}
+                  seller={blogDetails.author.userId}
+                  quantity={0}
+                  image={blogDetails?.gallery[0].original}
+                />
+              </div>
+            )}
           </div>
         </div>
-        <div className='mx-auto max-w-sm space-y-4'>
+        <div className='mx-auto w-full space-y-4'>
           <div className='hidden md:block'>
+            <div className='absolute z-10'>
+              {blogDetails?.streaming?.length > 0 ? (
+                <Link
+                  href={`/stream/${blogDetails.streaming}`}
+                  className='stream-item'
+                >
+                  <div className='flex items-center justify-start  bg-red-500 px-2 text-white'>
+                    <CiStreamOn className='mr-2' />
+                    <span>В эфире</span>
+                  </div>
+                </Link>
+              ) : (
+                <div className='flex items-center justify-start bg-black/50 px-2 text-white'>
+                  <CiStreamOff className='mr-2' />
+                  <span>Вне эфира</span>
+                </div>
+              )}
+            </div>
             <Card>
               <FlowImageGallery images={blogDetails?.gallery || []} />
             </Card>
           </div>
-
-          <Card className='mx-auto w-full'>
-            <CardContent className='space-y-8 px-6 py-8 font-satoshi'>
-              <div>
-                <div className='text-center text-lg font-semibold'>
-                  {t('anything_wrong_with_the_post')}
-                </div>
-                <div className='text-center text-xs text-muted-foreground'>
-                  {t('make_a_complaining_about_the_post')}
-                </div>
-              </div>
-              <ComplainModal>
-                <Button
-                  variant='outline'
-                  className='w-full !border-primary text-primary'
-                >
-                  <IoFlagOutline className='mr-2 size-4' />
-                  {t('complain')}
-                </Button>
-              </ComplainModal>
-            </CardContent>
-          </Card>
-          <Card className='mx-auto w-full'>
-            <CardContent className='px-6 pt-4 font-satoshi'>
-              <div className='flex flex-col items-center'>
-                <UpvoteCard
-                  id={blogDetails.id}
-                  vote={blogDetails.vote}
-                  upvotes={blogDetails.review?.upvotes}
-                  downvotes={blogDetails.review?.downvotes}
-                  me={blogDetails.me}
-                />
-              </div>
-            </CardContent>
-          </Card>
           <Card className='mx-auto w-full'>
             <CardHeader className='items-center gap-2'>
               <div className='relative h-28  overflow-hidden rounded-lg'>
@@ -472,13 +510,13 @@ export default async function FlowPage({
                 )}
               </div>
             </CardFooter>
-            <div className='flex flex-col gap-4 text-center'>
+            <div className='flex flex-col gap-4 px-2 pb-4 pr-2 text-center'>
               <Button className='btn w-full !rounded-md' asChild>
                 <Link href={`/profiles/${blogDetails.author?.username}`}>
                   {t('visit_profile')}
                 </Link>
               </Button>
-              {session ? (
+              {userId ? (
                 <MessageForm
                   user={{
                     username: blogDetails.author?.username,
@@ -500,6 +538,40 @@ export default async function FlowPage({
                 </Button>
               )}
             </div>
+          </Card>
+          <Card className='mx-auto w-full'>
+            <CardContent className='px-6 pt-4 font-satoshi'>
+              <div className='flex flex-col items-center'>
+                <UpvoteCard
+                  id={blogDetails.id}
+                  vote={blogDetails.vote}
+                  upvotes={blogDetails.review?.upvotes}
+                  downvotes={blogDetails.review?.downvotes}
+                  me={blogDetails.me}
+                />
+              </div>
+            </CardContent>
+          </Card>
+          <Card className='mx-auto w-full'>
+            <CardContent className='space-y-8 px-6 py-8 font-satoshi'>
+              <div>
+                <div className='text-center text-lg font-semibold'>
+                  {t('anything_wrong_with_the_post')}
+                </div>
+                <div className='text-center text-xs text-muted-foreground'>
+                  {t('make_a_complaining_about_the_post')}
+                </div>
+              </div>
+              <ComplainModal>
+                <Button
+                  variant='outline'
+                  className='w-full !border-primary text-white dark:text-primary'
+                >
+                  <IoFlagOutline className='mr-2 size-4' />
+                  {t('complain')}
+                </Button>
+              </ComplainModal>
+            </CardContent>
           </Card>
         </div>
       </div>

@@ -15,14 +15,20 @@ import { QRCodeModal } from '../../common/qrcode-modal';
 import { CategoryCard } from './category-card';
 import { CityCard } from './city-card';
 import { IoLanguage } from 'react-icons/io5';
+import { CiStreamOn } from 'react-icons/ci';
+import { CiStreamOff } from 'react-icons/ci';
+import { FollowButtonGroup } from './follow-button-group';
 
 export interface ProfileCardProps {
+  canFollow: boolean;
   username: string;
+  userID: string;
   bio: string;
   avatar: string;
   tags: string[];
   cities: string[];
   categories: string[];
+  streaming: string[];
   qrcode: string;
   countrycode: string;
   totalfollowers: number;
@@ -46,7 +52,9 @@ function ProfileCard(profile: ProfileCardProps) {
   const t = useTranslations('main');
   const {
     username,
+    streaming,
     bio,
+    canFollow,
     avatar,
     tags,
     cities,
@@ -72,6 +80,35 @@ function ProfileCard(profile: ProfileCardProps) {
     <Card className='size-full w-full'>
       <CardContent className='relative flex size-full flex-col gap-4 p-0'>
         <div className='relative'>
+          <div
+            className={`absolute right-4 top-[14px] z-10 mr-3 rounded-md bg-cover bg-center bg-no-repeat`}
+            // style={{ backgroundImage: `url('/images/${countrycode}.svg')` }}
+          >
+            {/* <div className='flex items-center justify-end rounded-md bg-black/50 px-2 text-white'>
+              <CiStreamOff className='mr-2' />
+              <span className=''>Вне эфира</span>
+            </div> */}
+            {profile.streaming.length > 0 ? (
+              profile.streaming.map((stream: any, index: number) => (
+                <Link
+                  href={`/stream/${stream.roomID}`}
+                  key={index}
+                  className='stream-item'
+                >
+                  <div className='flex items-center justify-end rounded-md bg-red-500 px-2 text-white'>
+                    <CiStreamOn className='mr-2' />
+                    <span>В эфире</span>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className='flex items-center justify-end rounded-md bg-black/50 px-2 text-white'>
+                <CiStreamOff className='mr-2' />
+                <span className=''>Вне эфира </span>
+              </div>
+            )}
+          </div>
+
           <div className='min-h-[320px] w-full md:min-h-[416px]'>
             {avatar ? (
               <Image
@@ -100,17 +137,7 @@ function ProfileCard(profile: ProfileCardProps) {
         <div className='relative h-[40px] w-full max-w-[100%] px-3 text-center'>
           <TagSlider tags={tags} />
         </div>
-        <div className='relative'>
-          <div
-            className={`absolute right-0 top-3 mr-3 rounded-md bg-cover bg-center bg-no-repeat`}
-            style={{ backgroundImage: `url('/images/${countrycode}.svg')` }}
-          >
-            <div className='flex items-center justify-end rounded-md bg-black/50 px-2 text-white'>
-              <IoLanguage />
-              <span className='uppercase'>{countrycode}</span>
-            </div>
-          </div>
-        </div>
+
         <div className='px-3 font-satoshi'>
           <Link
             href='/profiles/[username]'
@@ -120,22 +147,29 @@ function ProfileCard(profile: ProfileCardProps) {
           >
             @{username}
           </Link>
-          <div className='line-clamp-3 text-sm text-muted-foreground'>
-            {bio}
+          <div className='line-clamp-3 flex  flex-col-reverse text-sm text-muted-foreground'>
+            <div>{bio}</div>
+            <div className='pb-4'>
+              <FollowButtonGroup
+                me={false}
+                follow={profile.canFollow}
+                followerID={profile.userID}
+              />
+            </div>
           </div>
         </div>
         <div className='mt-auto grid grid-cols-2 px-3'>
           <div>
             <div className='flex items-center justify-start gap-2 pb-2 text-muted-foreground'>
               <IoCalendarNumberOutline className='size-5 text-black dark:text-white' />
-              <span className='text-sm'>
+              <span className='text-xs md:text-sm'>
                 {t('online')}:{' '}
                 {`${review.monthtime.hour}h : ${review.monthtime.minutes}m`}
               </span>
             </div>
             <div className='flex items-center justify-start gap-2 text-muted-foreground'>
               <CiClock1 className='size-5 text-black dark:text-white' />
-              <span className='text-sm'>
+              <span className='text-xs md:text-sm'>
                 {t('total')}:{' '}
                 {`${review.totaltime.hour}h : ${review.totaltime.minutes}m`}
               </span>
@@ -144,13 +178,13 @@ function ProfileCard(profile: ProfileCardProps) {
           <div>
             <div className='flex items-center justify-start gap-2 pb-2 text-muted-foreground'>
               <GiShadowFollower className='size-5 text-black dark:text-white' />
-              <span className='text-sm'>
+              <span className='text-xs md:text-sm'>
                 {t('subscribes')}: {`${totalfollowers}`}
               </span>
             </div>
             <div className='flex items-center justify-start gap-2 text-muted-foreground'>
               <TiMessage className='size-5 text-black dark:text-white' />
-              <span className='text-sm'>
+              <span className='text-xs md:text-sm'>
                 {t('total_posts')}: {`${review.totalposts}`}
               </span>
             </div>

@@ -1,4 +1,5 @@
 import { FaHardDrive, FaSackDollar, FaUserClock } from 'react-icons/fa6';
+
 import React, { useState, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,7 @@ import { PaxContext } from '@/context/context';
 import { useContext } from 'react';
 import { PlanUpgradeModal } from './plan-upgrade-modal';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 interface CTAProps {
   title: string;
@@ -78,7 +80,8 @@ function Clock({
 }
 
 export default function CTASection({ title, description, icon }: CTAProps) {
-  const { user } = useContext(PaxContext);
+  const { user, cryptoBalance } = useContext(PaxContext);
+  const t = useTranslations('main');
 
   const Icon = icon;
   const initialHours = user?.onlinehours?.hour || 0;
@@ -91,34 +94,33 @@ export default function CTASection({ title, description, icon }: CTAProps) {
         <div className='rounded-full bg-primary/10 p-3 text-primary'>
           <Icon className='size-5' />
         </div>
-        <div>
-          <div className='text-lg font-semibold'>{title}</div>
+        <div className='w-[90px] md:w-full'>
+          <div className='truncate text-lg font-semibold'>{title}</div>
           <div className='hidden text-sm text-muted-foreground lg:block'>
             {description || ''}
           </div>
         </div>
-        {/* <PlanUpgradeModal>
-          <Button variant='outline' className='ml-auto sm:hidden'>
+        <PlanUpgradeModal>
+          <Button variant='outline' className='ml-auto text-white sm:hidden'>
             <FaHardDrive className='mr-2 size-4' />
             {user?.storage || 0} / {user?.limitStorage || 0} MB
           </Button>
-        </PlanUpgradeModal> */}
+        </PlanUpgradeModal>
       </div>
-      <div className='flex gap-2'>
-        {/* <PlanUpgradeModal>
+      <div className='flex flex-col gap-2 md:flex-row'>
+        <PlanUpgradeModal>
           <Button variant='outline' className='hidden w-full sm:flex'>
             <FaHardDrive className='mr-2 size-4' />
             {user?.storage || 0} / {user?.limitStorage || 0} MB
           </Button>
-        </PlanUpgradeModal> */}
-        {/* <Button variant='outline' className='w-full' asChild>
-          <Link href='/profile/setting?tab=accounting'>
-            <FaSackDollar className='mr-2 size-4' />
-            {user?.balance || 0}
+        </PlanUpgradeModal>
+        <Button variant='outline' className='w-ful' asChild>
+          <Link href='/profile/accouting'>
+            {t('balance')} {cryptoBalance || 0} RUDT
           </Link>
-        </Button> */}
-        <Button variant='outline' className='w-full'>
-          <FaUserClock className='mr-2 size-4 text-primary' />
+        </Button>
+        <Button variant='outline' className='w-full text-white'>
+          <FaUserClock className='mr-2 size-4' />
           <Clock
             initialHours={initialHours}
             initialMinutes={initialMinutes}

@@ -1,6 +1,6 @@
 'use client';
 
-import { IRoom } from '@/app/[locale]/(public)/stream/page';
+import { IRoom } from '@/app/[locale]/(custom)/stream/page';
 import { StreamingCreateModal } from '@/components/chat/streamingCreateModal';
 // import axios from 'axios';
 // import { useEffect, useState } from 'react';
@@ -45,7 +45,7 @@ export default function FlowSection({ data }: FlowProps) {
                   <StreamingCreateModal onCreate={() => {}} isLoading={false}>
                     <Button
                       variant='outline'
-                      className='mx-auto flex border-primary text-primary'
+                      className='mx-auto flex '
                     >
                       {t('start_stream')}
                     </Button>

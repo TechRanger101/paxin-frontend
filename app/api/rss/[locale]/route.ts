@@ -14,8 +14,8 @@ export async function GET(req: NextRequest) {
 
     //@ts-ignore
     const feed = new RSS({
-      title: 'Paxintrade',
-      description: 'Paxintrade RSS Feed',
+      title: 'paxintradeONLINE',
+      description: 'paxintradeONLINE RSS Feed',
       site_url: process.env.NEXT_PUBLIC_WEBSITE_URL || '',
     });
 

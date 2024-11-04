@@ -52,25 +52,25 @@ export function ProductCard({
 
   return (
     <div>
-      <div className='relative flex w-full flex-col gap-4 md:h-full md:flex-row'>
+      <div className='relative px-0 md:px-0 flex w-full flex-col gap-4 md:h-full md:flex-row'>
         <div
           aria-label='actions'
           className='absolute right-2 top-60 z-10 flex gap-2 md:top-0'
         ></div>
 
         <div className='relative flex w-full flex-col md:h-32'>
-          <Link href={link} className='line-clamp-1 text-xl font-bold'>
+          <Link href={link} className='text-xl font-bold text-white md:text-black'>
             {title}
           </Link>
-          <div className='line-clamp-1 w-full text-sm text-muted-foreground md:w-[90%]'>
+          <div className='w-full text-sm text-muted-foreground md:w-[90%] text-white md:text-black'>
             {subtitle}
           </div>
           {price!=0?
-            <div className='flex gap-2'>
-              {t('starting_price')}: ${price}
+            <div className='flex gap-2 text-white md:text-black'>
+              {t('starting_price')}: {price} ₽
             </div>
           :null}
-          
+
         </div>
         <Carousel className='hidden w-60 md:block  md:w-32'>
           <CarouselContent>
@@ -78,7 +78,7 @@ export function ProductCard({
               <CarouselItem key={index}>
                 <div className='relative h-32 w-full'>
                   <Image
-                    src={`https://proxy.paxintrade.com/400/https://img.paxintrade.com/${image}`}
+                    src={`https://proxy.paxintrade.online/400/https://img.paxintrade.online/${image}`}
                     alt='preview image'
                     style={{ objectFit: 'cover' }}
                     fill
@@ -91,7 +91,7 @@ export function ProductCard({
           <CarouselNext className='right-3' />
         </Carousel>
       </div>
-      <Separator className='my-4' />
+      {/* <Separator className='my-4' /> */}
     </div>
   );
 }

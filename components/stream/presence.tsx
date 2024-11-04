@@ -21,7 +21,7 @@ export default function Presence({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <div className='flex items-center gap-2 rounded-lg px-2 py-1 text-violet-600 hover:bg-violet-100 hover:transition-all focus:outline-none focus:ring active:bg-violet-300 dark:text-violet-400 dark:hover:bg-zinc-900'>
+        <div className='flex items-center gap-2 rounded-lg px-2 py-1 bg-primary hover:bg-violet-100 hover:transition-all focus:outline-none focus:ring'>
           <Icons.user className='h-5 w-5' />
           <div className='font-bold'>{participants.length}</div>
         </div>
@@ -44,7 +44,7 @@ export default function Presence({
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     className='rounded-full'
-                    src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${participant?.metadata}`}
+                    src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${participant?.metadata}`}
                     alt={participant.identity}
                   />
                 </div>

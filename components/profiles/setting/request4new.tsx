@@ -29,13 +29,10 @@ import { TfiWrite } from 'react-icons/tfi';
 import 'react-quill/dist/quill.snow.css';
 import * as z from 'zod';
 import toast from 'react-hot-toast';
-import { useContext, useEffect, useRef } from 'react';
-import { PaxContext } from '@/context/context';
 
 export function NewPostModal({ openModal, setOpenModal, requestType }: any) {
   const t = useTranslations('main');
-  const { lastCommand } = useContext(PaxContext);
-  const socket = useRef<WebSocket>();
+
   const formSchema = z.object({
     title: z.string().min(1, t('title_is_required')),
     descr: z
@@ -54,10 +51,6 @@ export function NewPostModal({ openModal, setOpenModal, requestType }: any) {
       descr: '',
     },
   });
-
-  useEffect(() => {
-    if (lastCommand === 'BalanceAdded') setOpenModal(false);
-  }, [lastCommand]);
 
   const submitBlog = async (data: FormData) => {
     setOpenModal(false);

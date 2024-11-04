@@ -33,8 +33,6 @@ export function SignUpCard() {
 
   const formSchema = z
     .object({
-      firstname: z.string().min(1, t('firstname_is_required')),
-      lastname: z.string().min(1, t('lastname_is_required')),
       email: z.string().email(t('invalid_email')),
       password: z.string().min(8, t('password_must_be_at_least_8_characters')),
       confirmPassword: z
@@ -54,8 +52,6 @@ export function SignUpCard() {
   type UserFormValue = z.infer<typeof formSchema>;
 
   const defaultValues = {
-    firstname: '',
-    lastname: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -71,8 +67,6 @@ export function SignUpCard() {
 
     try {
       const res = await axios.post(`/api/auth/signup?language=${locale}`, {
-        firstname: data.firstname,
-        lastname: data.lastname,
         email: data.email,
         password: data.password,
         confirmPassword: data.confirmPassword,
@@ -130,7 +124,7 @@ export function SignUpCard() {
             onSubmit={form.handleSubmit(onSubmit)}
             className='w-full space-y-2'
           >
-            <div className='flex gap-2'>
+            {/* <div className='flex gap-2'>
               <FormField
                 control={form.control}
                 name='firstname'
@@ -172,7 +166,7 @@ export function SignUpCard() {
                   </FormItem>
                 )}
               />
-            </div>
+            </div> */}
             <FormField
               control={form.control}
               name='email'

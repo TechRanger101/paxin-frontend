@@ -24,7 +24,7 @@ import { LuBrainCircuit } from 'react-icons/lu';
 import { useEffect, useState } from 'react';
 import apiHelper from '@/helpers/api/apiRequest';
 import { FlowCardSkeleton } from './flow-card-skeleton';
-import { IRoom } from '@/app/[locale]/(public)/stream/page';
+import { IRoom } from '@/app/[locale]/(custom)/stream/page';
 import { FlowImageGallery } from './flow-image-gallery';
 import { useSession } from 'next-auth/react';
 
@@ -87,16 +87,16 @@ function FlowCard({ productImages, roomId, title, publisher, cnt }: IRoom) {
             <FlowImageGallery
               images={productImages.map((el) => ({
                 thumbnail:
-                  'https://proxy.paxintrade.com/400/https://img.paxintrade.com/' +
+                  'https://proxy.paxintrade.online/400/https://img.paxintrade.online/' +
                   el,
                 original:
-                  'https://proxy.paxintrade.com/400/https://img.paxintrade.com/' +
+                  'https://proxy.paxintrade.online/400/https://img.paxintrade.online/' +
                   el,
               }))}
             />
             {/* <Image
               src={
-                'https://proxy.paxintrade.com/100/https://img.paxintrade.com/' +
+                'https://proxy.paxintrade.online/100/https://img.paxintrade.online/' +
                 publisher.photo
               }
               fill
@@ -120,7 +120,7 @@ function FlowCard({ productImages, roomId, title, publisher, cnt }: IRoom) {
             </Link>
             <Badge
               variant='default'
-              className='mt-0 border-none bg-gradient-to-r from-[#00B887] to-[#01B6D3] p-2 text-white'
+              className='mt-0 border-none bg-gradient-to-r from-[#73a2ff] to-[#73a2ff] p-2 text-white'
             >
               <Eye className='mr-2 size-4 text-white' />
               {cnt}
@@ -199,7 +199,7 @@ function FlowCard({ productImages, roomId, title, publisher, cnt }: IRoom) {
                 <div className='flex gap-2'>
                   <ProfileAvatar
                     src={
-                      'https://proxy.paxintrade.com/100/https://img.paxintrade.com/' +
+                      'https://proxy.paxintrade.online/100/https://img.paxintrade.online/' +
                       publisher.photo
                     }
                     username={publisher.name}

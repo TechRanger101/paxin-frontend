@@ -26,36 +26,35 @@ interface AvatarWithMenuProps {
   };
 }
 
-function deleteCookie(name:any, domain:any) {
-  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=" + domain + "; path=/";
-}
-
-function handleSignOut() {
-  fetch('/api/auth/logout', {
-    method: 'POST',
-  })
-  .then((response) => {
-    if (response.ok) {
-      deleteCookie('access_token', '.myru.online');
-      signOut({ callbackUrl: '/' });
-    } else {
-      console.error('err:', response.statusText);
-    }
-  })
-  .catch((error) => {
-    console.error('err:', error);
-  });
-}
-
 export function AvatarWithMenu({ user }: AvatarWithMenuProps) {
   const t = useTranslations('main');
 
+  function deleteCookie(name:any, domain:any) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=" + domain + "; path=/";
+  }
+
+  function handleSignOut() {
+    fetch('/api/auth/logout', {
+      method: 'POST',
+    })
+    .then((response) => {
+      if (response.ok) {
+        deleteCookie('access_token', '.paxintrade.online');
+        signOut({ callbackUrl: '/' });
+      } else {
+        console.error('err:', response.statusText);
+      }
+    })
+    .catch((error) => {
+      console.error('err:', error);
+    });
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className='mr-3 hidden md:block'>
           <AvatarImage
-            src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${user?.avatar}`}
+            src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${user?.avatar}`}
             alt={user?.username}
           />
           <AvatarFallback>{getInitials(user?.username || '')}</AvatarFallback>
@@ -69,7 +68,7 @@ export function AvatarWithMenu({ user }: AvatarWithMenuProps) {
           >
             <Avatar>
               <AvatarImage
-                src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${user?.avatar}`}
+                src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${user?.avatar}`}
                 alt={user?.username}
               />
               <AvatarFallback>
@@ -108,7 +107,7 @@ export function AvatarWithMenu({ user }: AvatarWithMenuProps) {
         <DropdownMenuItem
           className='cursor-pointer text-base'
           onClick={handleSignOut}
-        >
+          >
           <FaSignOutAlt className='mr-2 size-5 text-primary' />
           {t('sign_out')}
         </DropdownMenuItem>

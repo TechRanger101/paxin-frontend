@@ -1,14 +1,26 @@
 import authOptions from '@/lib/authOptions';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import cookie from 'cookie';
 
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.pathname.split('/').pop();
   const slug = req.nextUrl.searchParams.get('slug');
 
   const locale = req.nextUrl.searchParams.get('language') || 'en';
-
   const session = await getServerSession(authOptions);
+
+  let accessToken = session?.accessToken;
+  if (!accessToken) {
+    const cookies = headers().get('cookie') || '';
+    const parsedCookies = cookie.parse(cookies);
+    accessToken = parsedCookies.access_token;
+  }
+
+  if (!accessToken) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
   try {
     const res = await fetch(
@@ -70,13 +82,13 @@ export async function GET(req: NextRequest) {
           : 0,
       gallery: blogData.data[0].photos[0].files.map((file: any) => {
         return {
-          original: `https://proxy.paxintrade.com/400/https://img.paxintrade.com/${file.path}`,
-          thumbnail: `https://proxy.paxintrade.com/50/https://img.paxintrade.com/${file.path}`,
+          original: `https://proxy.paxintrade.online/400/https://img.paxintrade.online/${file.path}`,
+          thumbnail: `https://proxy.paxintrade.online/50/https://img.paxintrade.online/${file.path}`,
         };
       }),
       author: {
         username: blogData.data[0].user.name,
-        avatar: `https://proxy.paxintrade.com/100/https://img.paxintrade.com/${blogData.data[0].user.photo}`,
+        avatar: `https://proxy.paxintrade.online/100/https://img.paxintrade.online/${blogData.data[0].user.photo}`,
         bio: blogData.data[0].userProfile.multilangtitle[
           locale.charAt(0).toUpperCase() + locale.slice(1)
         ],

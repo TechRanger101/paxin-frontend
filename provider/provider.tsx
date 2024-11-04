@@ -1,16 +1,25 @@
 'use client';
 
-import { PaxContext, User } from '@/context/context';
+import { PaxContext, User, AdditionalData } from '@/context/context';
 import axios from 'axios';
-import { useSession } from 'next-auth/react';
-
 import { useLocale } from 'next-intl';
 import { setCookie } from 'nookies';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, {
+  ReactNode,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react';
 import useSWR from 'swr';
+import { useSession } from 'next-auth/react';
+import cookies from 'next-cookies';
+import { GetServerSideProps } from 'next';
 
 interface IProps {
   children: ReactNode;
+  initialAccessToken: string | null;
 }
 
 const PLAN = {
@@ -21,27 +30,52 @@ const PLAN = {
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-const Providers: React.FC<IProps> = ({ children }) => {
-  const session = useSession();
+const Providers: React.FC<IProps> = ({ children, initialAccessToken }) => {
   const [user, setUser] = useState<User | null>(null);
   const [postMode, setPostMode] = useState<string>('all');
-  const [currentPlan, setCurrentPlan] = useState<string>('BASIC');
-  const [socket, setSocket] = useState<WebSocket | null>(null);
   const [lastCommand, setLastCommand] = useState<string>('');
+  const session = useSession();
+  const [additionalData, setAdditionalData] = useState<AdditionalData[]>([]);
+  const [currentPlan, setCurrentPlan] = useState<string>('BASIC');
+  const socketRef = useRef<WebSocket | null>(null); // Используем useRef для хранения состояния сокета
   const locale = useLocale();
-  const [userFetchURL, setUserFetchURL] = useState<string>(
-    `/api/users/me?language=${locale}`
+
+  const [cryptoBalance, setCryptoBalance] = useState<number | null>(null);
+  const [cryptoWallet, setCryptoWallet] = useState<string | null>(null);
+  const [cryptoPublicKey, setCryptoPublicKey] = useState<string | null>(null);
+
+  const userFetchURL = useMemo(
+    () => `/api/users/me?language=${locale}`,
+    [locale]
   );
+
+  const cryptoBalanceURL = `/api/crypto/balance/get`;
 
   const {
     data: fetchedData,
     error,
     mutate: userMutate,
-  } = useSWR(session.status === 'authenticated' ? userFetchURL : null, fetcher);
+  } = useSWR(
+    session.status === 'authenticated' || initialAccessToken
+      ? userFetchURL
+      : null,
+    fetcher
+  );
+
+  const { data: cryptoData, error: cryptoError } = useSWR(
+    cryptoBalanceURL,
+    fetcher
+  );
+
+  console.log(fetchedData);
 
   useEffect(() => {
-    setUserFetchURL(`/api/users/me?language=${locale}`);
-  }, [locale]);
+    if (!cryptoError && cryptoData) {
+      setCryptoBalance(cryptoData.data?.balance);
+      setCryptoWallet(cryptoData.data?.wallet);
+      setCryptoPublicKey(cryptoData.data?.public_key);
+    }
+  }, [cryptoData, cryptoError]);
 
   useEffect(() => {
     if (!error && fetchedData) {
@@ -51,6 +85,7 @@ const Providers: React.FC<IProps> = ({ children }) => {
         email: fetchedData.data?.user?.email,
         avatar: fetchedData.data?.user?.photo,
         plan: fetchedData.data?.user?.Plan,
+        seller: fetchedData.data?.user?.Seller,
         city: fetchedData.data?.user?.profile[0].City.map((city: string) =>
           JSON.parse(city)
         ),
@@ -67,74 +102,114 @@ const Providers: React.FC<IProps> = ({ children }) => {
         onlinehours: fetchedData.data?.user?.online_hours[0],
         totalposts: fetchedData.data?.user?.totalrestblog,
       });
-    }
 
-    setCurrentPlan(PLAN[fetchedData?.data?.user?.Plan as keyof typeof PLAN]);
+      setCurrentPlan(PLAN[fetchedData.data.user.Plan as keyof typeof PLAN]);
+    }
   }, [fetchedData, error]);
 
-  useEffect(() => {
-    if (process.browser) {
-      const wsProtocol =
-        window.location.protocol === 'https:' ? 'wss:' : 'wss:';
-      const _socket = new WebSocket(
-        `${wsProtocol}//${process.env.NEXT_PUBLIC_SOCKET_URL}/socket.io/`
-      );
-
-      _socket.onmessage = (received) => {
-        console.log('Socket message: ', received.data);
-        try {
-          const data = JSON.parse(received.data);
-          if (data?.command) {
-            setLastCommand(data?.command);
-          }
-          if (data?.session) {
-            console.log('Socket message: ', data?.session);
-            setCookie(null, 'session', data?.session, {
-              path: '/',
-            });
-            axios.defaults.headers.common['session'] = data?.session;
-          }
-        } catch (error) {}
-      };
-
-      const intervalId = setInterval(() => {
-        if (_socket.readyState === WebSocket.OPEN) {
-          _socket.send(
-            JSON.stringify({
-              messageType: 'ping',
-              data: [],
-            })
-          );
-        }
-      }, 5000);
-
-      setSocket(_socket);
-
-      return () => {
-        clearInterval(intervalId);
-        _socket.close();
-      };
+  const connectWebSocket = useCallback(() => {
+    if (socketRef.current) {
+      socketRef.current.close();
     }
+
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const _socket = new WebSocket(
+      `${wsProtocol}//${process.env.NEXT_PUBLIC_SOCKET_URL}/socket.io/`
+    );
+
+    _socket.onopen = () => {
+      console.log('WebSocket connected');
+    };
+
+    _socket.onmessage = (received) => {
+      try {
+        const data = JSON.parse(received.data);
+
+        if (data?.command) {
+          setLastCommand(data?.command);
+        }
+
+        if (data?.command === 'newDonat' && data?.data) {
+          setAdditionalData(data.data);
+        }
+
+        if (data?.session) {
+          setCookie(null, 'session', data?.session, {
+            path: '/',
+          });
+          axios.defaults.headers.common['session'] = data?.session;
+        }
+      } catch (error) {
+        console.error('Ошибка при обработке сообщения сокета:', error);
+      }
+    };
+
+    _socket.onclose = (event) => {
+      console.log(
+        'WebSocket disconnected with code:',
+        event.code,
+        'and reason:',
+        event.reason
+      );
+      if (event.code !== 1000) {
+        // 1000 indicates a normal closure
+        console.log('Attempting to reconnect WebSocket...');
+        setTimeout(connectWebSocket, 5000); // Attempt to reconnect every 5 seconds
+      }
+    };
+
+    _socket.onerror = (error) => {
+      console.error('WebSocket error: ', error);
+    };
+
+    socketRef.current = _socket;
   }, []);
+
+  useEffect(() => {
+    if (socketRef.current === null) {
+      connectWebSocket();
+    }
+
+    return () => {
+      socketRef.current?.close();
+    };
+  }, [connectWebSocket]);
 
   return (
     <PaxContext.Provider
       value={{
         user,
         setUser,
-        userMutate,
         lastCommand,
+        userMutate,
         postMode,
         setPostMode,
         currentPlan,
         setCurrentPlan,
-        socket,
-        setSocket,
+        socket: socketRef.current,
+        setSocket: (socket) => {
+          socketRef.current = socket;
+        },
+        additionalData,
+        setAdditionalData,
+        cryptoBalance, // Передаем данные баланса через контекст
+        cryptoWallet, // Передаем данные кошелька через контекст
+        cryptoPublicKey, // Передаем данные публичного ключа через контекст
       }}
     >
       {children}
     </PaxContext.Provider>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { access_token } = cookies(context);
+
+  return {
+    props: {
+      initialAccessToken: access_token || null,
+    },
+  };
 };
 
 export default Providers;

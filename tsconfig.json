@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "typeRoots": ["./types", "./node_modules/@types"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -31,6 +32,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "components/ui/draggable"
-  ],
+, "components/quill/VideoBlot.js", "components/quill/quill.js"  ],
   "exclude": ["node_modules"]
 }

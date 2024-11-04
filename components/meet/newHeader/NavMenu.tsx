@@ -30,7 +30,7 @@ export function MainNav({ id }: MainNavProps) {
           height={40.44}
           className='hidden size-[40.44px] dark:block'
         />
-        <span className='inline-block font-satoshi text-xl font-semibold sm:hidden lg:inline-block'>
+        <span className='inline-block font-satoshi text-xs font-semibold sm:hidden lg:inline-block'>
           {siteConfig.name}
         </span>
       </Link>
@@ -38,12 +38,12 @@ export function MainNav({ id }: MainNavProps) {
         <div className='mx-auto flex flex-row content-center justify-start'>
           <p className='block pt-1 leading-8 md:hidden'>PAX Meeting ({id})</p>
           <p className='hidden pt-1 leading-8 md:block lg:hidden'>
-            PAX Meeting (Room ID: {id})
+            (ID: {id})
           </p>
           <p className='hidden pt-1 leading-8 lg:block'>
-            PAX - Real Time Meeting (Room ID: {id})
+            (ID: {id})
           </p>
-          <CopyClipboard text={`https://www.paxintrade.com/meet/${id}`}>
+          <CopyClipboard text={`https://www.paxintrade.online/meet/${id}`}>
             <div className='notepad my-auto inline-block h-8 w-8 items-center justify-center rounded-full px-2 py-1'>
               <i className='pnm-notepad h-4 w-4 text-primaryColor dark:text-secondaryColor' />
             </div>

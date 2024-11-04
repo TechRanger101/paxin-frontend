@@ -1,9 +1,9 @@
 import Providers from '@/provider/provider';
 import SessionProviders from '@/provider/session-provider';
 import '@/styles/globals.css';
-
+import { Suspense } from 'react';
+import { Metrika } from '@/components/metrika';
 import CustomToaster from '@/components/common/custom-toast';
-// import NotificationMessage from '@/components/common/notification';
 import { TailwindIndicator } from '@/components/tailwind-indicator';
 import { ThemeProvider } from '@/components/theme-provider';
 import { MetadataUpdater } from '@/lib/dynamicMetadata';
@@ -16,8 +16,13 @@ import { getServerSession } from 'next-auth';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import StoreProvider from '../StoreProvider';
 import { StreamProvider } from '@/provider/stream-provider';
-import Chatbot from "@/components/chatbot";
-import { Toaster } from "react-hot-toast";
+import Chatbot from '@/components/chatbot';
+import { Toaster } from 'react-hot-toast';
+import Script from 'next/script';
+import NextTopLoader from 'nextjs-toploader';
+import { cookies } from 'next/headers';
+import { NotificationProvider } from '@/provider/notificationProvider';
+// import dynamic from 'next/dynamic';
 
 export const viewport: Viewport = {
   themeColor: [
@@ -53,12 +58,18 @@ export async function generateMetadata({
   return metadata;
 }
 
+// const DynamicInstallPrompt = dynamic(() => import('@/hooks/InstallPrompt'), { ssr: false });
+
 export default async function RootLayout({
   children,
   params: { locale },
 }: RootLayoutProps) {
   unstable_setRequestLocale(locale);
   const session = await getServerSession();
+
+  // Access the cookies to get the initial access token
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get('access_token')?.value || null;
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -75,34 +86,58 @@ export default async function RootLayout({
           fontRoboto.variable
         )}
       >
+        <NextTopLoader
+          color='#2299DD'
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          easing='ease'
+          speed={200}
+          shadow='0 0 10px #2299DD,0 0 5px #2299DD'
+          template='<div class="bar" role="bar"><div class="peg"></div></div> 
+          <div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
+          zIndex={1600}
+          showAtBottom={false}
+        />
         <SessionProviders session={session}>
-          <Providers>
+          <Providers initialAccessToken={accessToken}>
             <StoreProvider>
               <RTCProvider>
                 <StreamProvider>
-                <ThemeProvider
-                  attribute='class'
-                  defaultTheme='dark'
-                  // enableSystem={false}
-                >
-                  {children}
-                  {/* <NotificationMessage /> */}
-                  <CustomToaster />
-                  {/* <Chatbot
-                    title="Paxbot"
-                    subtitle="Online Paxbot"
-                    botName="Paxbot"
-                    welcomeMessage="Hi, I'm Paxbot. How can I help you today?"
-                  /> */}
-                  <Toaster />
-                  <MetadataUpdater />
-                </ThemeProvider>
-                <TailwindIndicator />
+                  <ThemeProvider
+                    attribute='class'
+                    defaultTheme='system'
+                    enableSystem={true}
+                  >
+                    <NotificationProvider>
+                      {children}
+                      <CustomToaster />
+                      <Toaster />
+                      <MetadataUpdater />
+                      <Script id='disable-zoom' strategy='afterInteractive'>
+                        {`
+                        document.addEventListener('gesturestart', function (e) {
+                          e.preventDefault();
+                        });
+                        document.addEventListener('dblclick', function (e) {
+                          e.preventDefault();
+                        });
+                      `}
+                      </Script>
+                    </NotificationProvider>
+                  </ThemeProvider>
+                  <TailwindIndicator />
                 </StreamProvider>
               </RTCProvider>
             </StoreProvider>
           </Providers>
         </SessionProviders>
+        {/* <DynamicInstallPrompt /> */}
+        <Suspense>
+          <Metrika />
+        </Suspense>
       </body>
     </html>
   );

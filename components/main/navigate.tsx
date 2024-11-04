@@ -11,17 +11,17 @@ export default function NavigateSection() {
 
   return (
     <div className='flex flex-col items-start justify-center px-0 pb-[40px] md:items-center md:pb-[0px]'>
-      <div className='px-7'>
+      {/* <div className='px-4'>
         <SectionBadge>{t('search_and_share')}</SectionBadge>
-      </div>
-      <SectionTitle className='px-7 text-left leading-[30px] md:text-center'>
+      </div> */}
+      <SectionTitle className='px-4 text-left leading-[30px] md:text-center'>
         {t('discover_paxintrade')}
       </SectionTitle>
-      <SectionDescription className='px-7 text-left md:text-center'>
+      <SectionDescription className='px-4 text-left md:text-center pb-4'>
         {t('navigating_your_digital_universe_description')}
       </SectionDescription>
       <div className='mt-4 flex flex-col gap-4 px-0 pb-4  md:flex-row  md:px-7 '>
-        <div className=' h-full  flex-col justify-center rounded-none bg-card-gradient-menu px-7 pb-4 pt-2 md:rounded-md'>
+        <div className=' h-full  flex-col justify-center rounded-none bg-card-gradient-menu px-4 pb-4 pt-2 md:rounded-md'>
           <div className='text-md  pb-2 font-extrabold text-secondary-foreground transition-all duration-500 group-hover:text-white md:text-xl'>
             {t('s_1')}
           </div>
@@ -29,7 +29,7 @@ export default function NavigateSection() {
             {t('s_1d')}
           </div>
         </div>
-        <div className='flex h-full  flex-col justify-center rounded-none bg-card-gradient-menu px-7 pb-4 pt-2 md:rounded-md'>
+        <div className='flex h-full  flex-col justify-center rounded-none bg-card-gradient-menu px-4 pb-4 pt-2 md:rounded-md'>
           <div className='text-md  pb-2 font-extrabold text-secondary-foreground transition-all duration-500 group-hover:text-white md:text-xl'>
             {t('s_2')}
           </div>
@@ -37,7 +37,7 @@ export default function NavigateSection() {
             {t('s_2d')}
           </div>
         </div>
-        <div className='flex h-full  flex-col justify-center rounded-none bg-card-gradient-menu px-7 pb-4 pt-2 md:rounded-md'>
+        <div className='flex h-full  flex-col justify-center rounded-none bg-card-gradient-menu px-4 pb-4 pt-2 md:rounded-md'>
           <div className='text-md  pb-2 font-extrabold text-secondary-foreground transition-all duration-500 group-hover:text-white md:text-xl'>
             {t('s_3')}
           </div>
@@ -78,12 +78,12 @@ export default function NavigateSection() {
             className='absolute left-0 top-0 z-[-1] size-full opacity-0 transition-opacity duration-500 group-hover:opacity-100'
             style={{
               background:
-                'linear-gradient(45deg, #00B887 0%, #01B6D3 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.20) 3.76%, rgba(228, 228, 228, 0.00) 30.22%), linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(220, 220, 220, 0.00) 63.35%), #F3F4F6',
+                'radial-gradient(100% 100% at 50% 50%, rgb(183 204 236) 0%, rgba(8, 102, 255, 0.58) 100%), rgb(255 255 255/ 50%)',
             }}
           ></div>
 
           <div
-            className='flex size-full flex-col items-start justify-center bg-[#00000008] bg-cover px-7 pb-[160px] pt-20 md:pb-0 md:pt-0'
+            className='flex size-full flex-col items-start justify-center bg-[#00000008] bg-cover px-4 pb-[160px] pt-20 md:pb-0 md:pt-0'
             style={{ backgroundImage: `url("/images/home/bg-nav-dark.webp")` }}
           >
             <div className='text-md pb-2 text-left font-extrabold text-secondary-foreground transition-all duration-500 group-hover:text-white md:text-xl'>
@@ -99,7 +99,7 @@ export default function NavigateSection() {
             className='absolute left-0 top-0 z-[-1] size-full opacity-0 transition-opacity duration-500 group-hover:opacity-100'
             style={{
               background:
-                'linear-gradient(45deg, #00B887 0%, #01B6D3 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.20) 3.76%, rgba(228, 228, 228, 0.00) 30.22%), linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(220, 220, 220, 0.00) 63.35%), #F3F4F6',
+                'radial-gradient(100% 100% at 50% 50%, rgb(183 204 236) 0%, rgba(8, 102, 255, 0.58) 100%), rgb(255 255 255/ 50%)',
             }}
           ></div>
           {/* <Image
@@ -117,7 +117,7 @@ export default function NavigateSection() {
             className='absolute mx-auto w-full'
             fill
           /> */}
-          <div className='flex h-full flex-col justify-center bg-[#00000008] px-7 pb-4 pt-2'>
+          <div className='flex h-full flex-col justify-center bg-[#00000008] px-4 pb-4 pt-2'>
             <div className='text-md  pb-2 font-extrabold text-secondary-foreground transition-all duration-500 group-hover:text-white md:text-xl'>
               {t('private_asks')}
             </div>
@@ -132,7 +132,7 @@ export default function NavigateSection() {
             className='absolute left-0 top-0 z-[-1] size-full opacity-0 transition-opacity duration-500 group-hover:opacity-100'
             style={{
               background:
-                'linear-gradient(45deg, #00B887 0%, #01B6D3 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.20) 3.76%, rgba(228, 228, 228, 0.00) 30.22%), linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(220, 220, 220, 0.00) 63.35%), #F3F4F6',
+                'radial-gradient(100% 100% at 50% 50%, rgb(183 204 236) 0%, rgba(8, 102, 255, 0.58) 100%), rgb(255 255 255/ 50%)',
             }}
           ></div>
           <div className='relative order-last mx-auto flex w-full max-w-sm justify-between p-4 sm:order-first'>
@@ -214,7 +214,7 @@ export default function NavigateSection() {
               fill
             />
           </div>
-          <div className='relative p-4 px-7 pt-7'>
+          <div className='relative p-4 px-4 pt-7'>
             <div className='md:text-md text-md pb-2 font-extrabold text-secondary-foreground transition-all duration-500 group-hover:text-white'>
               {t('smart_filters_for_tailored_content')}
             </div>

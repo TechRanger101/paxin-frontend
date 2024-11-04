@@ -60,7 +60,7 @@ export function MeetCreateModal({
               className='hidden size-12 dark:block'
             />
             <span className='inline-block font-satoshi text-2xl font-bold text-primary sm:hidden lg:inline-block'>
-              PaxMeet {t('create')}
+              {t('create')}
             </span>
           </div>
         </DialogHeader>
@@ -75,7 +75,7 @@ export function MeetCreateModal({
               className='pl-12 pr-4'
             />
           </div>
-          <div className='flex items-center space-x-2'>
+          {/* <div className='flex items-center space-x-2'>
             <Checkbox
               id='terms'
               checked={isPrivate}
@@ -97,7 +97,7 @@ export function MeetCreateModal({
                 className='pl-12 pr-4'
               />
             </div>
-          )}
+          )} */}
         </div>
         <DialogFooter>
           <div className='mx-auto'>

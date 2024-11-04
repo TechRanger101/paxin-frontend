@@ -48,15 +48,22 @@ const DropdownMenuDemo = ({
     const token = await createRoom(roomId, user.id, user.username);
 
     if (token) {
-      toast.success('New Room is created.', {
+      toast.success('Новая комната создана.', {
         position: 'top-right',
       });
 
       setAccessToken(token);
 
-      onRoomCreate &&
-        onRoomCreate(`${process.env.NEXT_PUBLIC_WEBSITE_URL}/meet/${roomId}`);
-      console.log(`${process.env.NEXT_PUBLIC_WEBSITE_URL}/meet/${roomId}`);
+      const roomLink = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/meet/${roomId}`;
+
+      onRoomCreate && onRoomCreate(roomLink);
+
+      // Перенаправление на страницу комнаты
+      if (typeof window !== 'undefined') {
+        window.location.href = roomLink;
+      }
+
+      console.log(roomLink);
     } else {
       toast.error('Failed to create room. Please try again', {
         position: 'top-right',
@@ -81,67 +88,14 @@ const DropdownMenuDemo = ({
             className='DropdownMenuContent relative z-10 bg-card-gradient-menu'
             sideOffset={5}
           >
-            <DropdownMenu.Item
-              className='DropdownMenuItem'
-              onClick={handleFileUploadClick}
-            >
-              Upload file <div className='RightSlot'>⌘+T</div>
-            </DropdownMenu.Item>
-
-            <DropdownMenu.Sub>
-              <DropdownMenu.Portal>
-                <DropdownMenu.SubContent
-                  className='DropdownMenuSubContent bg-card-gradient-menu'
-                  sideOffset={2}
-                  alignOffset={-5}
-                >
-                  <DropdownMenu.Item className='DropdownMenuItem'>
-                    Save Page As… <div className='RightSlot'>⌘+S</div>
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item className='DropdownMenuItem'>
-                    Create Shortcut…
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item className='DropdownMenuItem'>
-                    Name Window…
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Separator className='DropdownMenu.Separator' />
-                  <DropdownMenu.Item className='DropdownMenuItem'>
-                    Developer Tools
-                  </DropdownMenu.Item>
-                </DropdownMenu.SubContent>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Sub>
-
-            <DropdownMenu.Separator className='DropdownMenuSeparator' />
-
-            <DropdownMenu.CheckboxItem
-              className='DropdownMenuCheckboxItem'
-              checked={bookmarksChecked}
-              onCheckedChange={setBookmarksChecked}
-            >
-              <DropdownMenu.ItemIndicator className='DropdownMenuItemIndicator'>
-                <CheckIcon />
-              </DropdownMenu.ItemIndicator>
-              Show Bookmarks <div className='RightSlot'>⌘+B</div>
-            </DropdownMenu.CheckboxItem>
-            <DropdownMenu.CheckboxItem
-              className='DropdownMenuCheckboxItem'
-              checked={urlsChecked}
-              onCheckedChange={setUrlsChecked}
-            >
-              <DropdownMenu.ItemIndicator className='DropdownMenuItemIndicator'>
-                <CheckIcon />
-              </DropdownMenu.ItemIndicator>
-              Show Full URLs
-            </DropdownMenu.CheckboxItem>
-
+       
             <DropdownMenu.Separator className='DropdownMenuSeparator' />
 
             <DropdownMenu.Item
               className='DropdownMenuItem'
               onClick={onCreateRoom}
             >
-              Create a conference
+              <p className='p-0'>Пригласить в конференцию</p>
             </DropdownMenu.Item>
             <DropdownMenu.RadioGroup
               value={person}

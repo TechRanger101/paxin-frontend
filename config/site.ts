@@ -1,9 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'Paxintrade',
-  description:
-    'Trade streaming network.',
+  name: 'ONLINE',
+  description: 'Trade streaming network.',
   mainNav: [
     {
       title: 'trade',
@@ -17,6 +16,10 @@ export const siteConfig = {
       title: 'about',
       href: '/about',
     },
+    // {
+    //   title: 'blockchain',
+    //   href: '/blockchain',
+    // },
     {
       title: 'contact',
       href: '/contact',
@@ -45,38 +48,38 @@ export const siteConfig = {
         title: 'terms_and_conditions',
         href: '/terms',
       },
-      {
-        title: 'faq',
-        href: '/faq',
-      },
+      // {
+      //   title: 'faq',
+      //   href: '/faq',
+      // },
     ],
-    product: [
-      {
-        title: 'documentation',
-        href: '/docs',
-      },
-      {
-        title: 'blog',
-        href: '/blog',
-      },
-      {
-        title: 'changelog',
-        href: '/changelog',
-      },
-    ],
+    // product: [
+    //   {
+    //     title: 'documentation',
+    //     href: '/docs',
+    //   },
+    //   {
+    //     title: 'blog',
+    //     href: '/blog',
+    //   },
+    //   {
+    //     title: 'changelog',
+    //     href: '/changelog',
+    //   },
+    // ],
     resources: [
       {
         title: 'community',
-        href: '/community',
+        href: 'https://t.me/paxintradeonline',
       },
-      {
-        title: 'discord',
-        href: 'https://discord.gg/shadcn',
-      },
-      {
-        title: 'twitter',
-        href: 'https://twitter.com/paxintrade',
-      },
+      // {
+      //   title: 'discord',
+      //   href: 'https://discord.gg/shadcn',
+      // },
+      // {
+      //   title: 'twitter',
+      //   href: 'https://twitter.com/paxintrade',
+      // },
     ],
     social: {
       facebook: 'https://www.facebook.com/paxintrade',

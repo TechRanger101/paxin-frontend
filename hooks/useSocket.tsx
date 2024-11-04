@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 const useSocket = (locale: string): WebSocket | null => {
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [socketMessage, setSocketMessage] = useState<any>(null); // Добавляем состояние для сообщений
 
   useEffect(() => {
     const wsProtocol = 'wss:';
@@ -20,6 +21,16 @@ const useSocket = (locale: string): WebSocket | null => {
 
     newSocket.onmessage = (event) => {};
 
+    newSocket.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        setSocketMessage(data);
+      } catch (error) {
+        console.error('Failed to parse message', error);
+      }
+    };
+
+    
     const pingIntervalId = setInterval(() => {
       if (newSocket.readyState === WebSocket.OPEN) {
         const pingData = JSON.stringify({
