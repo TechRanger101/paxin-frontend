@@ -62,7 +62,7 @@ pipelines:
                 echo "Building Nextjs App at Production Environment..."
                 apk add --no-cache git
                 npm install #--legacy-peer-deps
-                git clone https://x-token-auth:$BITBUCKET_ENV_REPO_ACCESS_TOKEN@bitbucket.org/paxintrade/paxintrade-environment-values.git
+                git clone https://x-token-auth:$BITBUCKET_ENV_REPO_ACCESS_TOKEN@bitbucket.org/paxintrade/environment-values.git
                 mv environment-values/mainsite/frontend/.env.production .env
                 rm -rf environment-values
                 npm run build
