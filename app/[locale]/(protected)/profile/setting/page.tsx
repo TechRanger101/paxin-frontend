@@ -1806,7 +1806,7 @@ export default function SettingPage() {
                       {t.rich('copy_code_and_send_to_bot', {
                         botname: (children) => (
                           <Link
-                            href='https://t.me/paxintradebot'
+                            href='https://t.me/Paxintradebot'
                             target='_blank'
                           >
                             {children}
