@@ -72,7 +72,7 @@ export default function Relationships() {
           user: {
             id: follower.ID,
             username: follower.Name,
-            avatar: `https://proxy.paxintrade.online/150/https://img.paxintrade.online/${follower.Photo}`,
+            avatar: `https://proxy.paxintrade.com/150/https://img.paxintrade.com/${follower.Photo}`,
             bio:
               follower.Profile && follower.Profile.length > 0
                 ? follower.Profile[0].MultilangDescr[

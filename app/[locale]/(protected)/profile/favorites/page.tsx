@@ -74,7 +74,7 @@ export default function FavoritesPage() {
           {favorites.map((favorite: any) => (
             <div key={favorite.ID} className='rounded-lg border p-4 shadow-lg'>
               <img
-                src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${favorite.Blog.photos[0].files[0].path}`}
+                src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${favorite.Blog.photos[0].files[0].path}`}
                 alt='Photo'
                 className='mb-4 h-16 w-16 rounded-full'
               />

@@ -44,7 +44,7 @@ export default function Presence({
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     className='rounded-full'
-                    src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${participant?.metadata}`}
+                    src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${participant?.metadata}`}
                     alt={participant.identity}
                   />
                 </div>

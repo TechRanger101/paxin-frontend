@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
                 data.data.highestIsUpBlog.MultilangDescr[
                   locale.charAt(0).toUpperCase() + locale.slice(1)
                 ],
-              hero: `https://proxy.paxintrade.online/400/https://img.paxintrade.online/${data.data.highestIsUpBlog.photos[0].files[0].path}`,
+              hero: `https://proxy.paxintrade.com/400/https://img.paxintrade.com/${data.data.highestIsUpBlog.photos[0].files[0].path}`,
               review: {
                 votes: data.data.totalVotes,
                 views: data.data.highestIsUpBlog.Views,
@@ -72,8 +72,8 @@ export async function GET(req: NextRequest) {
         data.data.Profile[0].photos?.length > 0
           ? data.data.Profile[0].photos[0].files.map((file: any) => {
               return {
-                original: `https://proxy.paxintrade.online/400/https://img.paxintrade.online/${file.path}`,
-                thumbnail: `https://proxy.paxintrade.online/50/https://img.paxintrade.online/${file.path}`,
+                original: `https://proxy.paxintrade.com/400/https://img.paxintrade.com/${file.path}`,
+                thumbnail: `https://proxy.paxintrade.com/50/https://img.paxintrade.com/${file.path}`,
               };
             })
           : [],

@@ -44,7 +44,7 @@ const authOptions: NextAuthOptions = {
                 path: '/',
                 maxAge: 60 * 60 * 24 * 30,
                 domain:
-                  process.env.NODE_ENV === 'production' ? '.paxintrade.online' : 'localhost',
+                  process.env.NODE_ENV === 'production' ? '.paxintrade.com' : 'localhost',
                 httpOnly: false,
                 secure: process.env.NODE_ENV === 'production',
             });

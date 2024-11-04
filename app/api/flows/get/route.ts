@@ -35,12 +35,12 @@ export async function GET(req: NextRequest) {
           username: item.user.name,
           online: item.user.online,
           telegram: item.user.telegramactivated ? item.user.telegramname : '',
-          avatar: `https://proxy.paxintrade.online/100/https://img.paxintrade.online/${item.user.photo}`,
+          avatar: `https://proxy.paxintrade.com/100/https://img.paxintrade.com/${item.user.photo}`,
         },
         slug: item.slug,
         hero:
           item.photos?.length > 0 && item.photos[0].files?.length > 0
-            ? `https://proxy.paxintrade.online/400/https://img.paxintrade.online/${item.photos[0].files[0].path}`
+            ? `https://proxy.paxintrade.com/400/https://img.paxintrade.com/${item.photos[0].files[0].path}`
             : '',
         price: item.total,
         regularpost: item.user.role === 'user',

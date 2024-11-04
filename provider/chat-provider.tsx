@@ -187,7 +187,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                           owner: {
                             id: publication.body.parentMsg.user.id,
                             name: publication.body.parentMsg.user.name,
-                            avatar: `https://proxy.paxintrade.online/150/https://img.paxintrade.online/${publication.body.parentMsg.user.photo}`,
+                            avatar: `https://proxy.paxintrade.com/150/https://img.paxintrade.com/${publication.body.parentMsg.user.photo}`,
                           },
                         }
                       : undefined,
@@ -200,7 +200,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                   owner: {
                     id: publication.body.user_id,
                     name: publication.body.user.name,
-                    avatar: `https://proxy.paxintrade.online/150/https://img.paxintrade.online/${publication.body.user.photo}`,
+                    avatar: `https://proxy.paxintrade.com/150/https://img.paxintrade.com/${publication.body.user.photo}`,
                   },
                   isDeleted: publication.body.is_deleted,
                   isEdited: publication.body.is_deleted,
@@ -299,7 +299,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
               id: sender.user.id,
               profile: {
                 name: sender.user.name,
-                avatar: `https://proxy.paxintrade.online/150/https://img.paxintrade.online/${sender.user.photo}`,
+                avatar: `https://proxy.paxintrade.com/150/https://img.paxintrade.com/${sender.user.photo}`,
                 categories: sender.user.profile[0].guild.map(
                   (guild: any) => guild.translations[0].name
                 ),

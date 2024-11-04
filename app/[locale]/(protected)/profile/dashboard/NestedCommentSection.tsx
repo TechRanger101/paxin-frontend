@@ -185,7 +185,7 @@ export default function NestedCommentSection({
         <div className='mb-2 flex items-center space-x-2'>
           <Avatar className='mr-3'>
             <AvatarImage
-              src={`https://proxy.paxintrade.online/50/https://img.paxintrade.online/${comment.user?.Photo}`}
+              src={`https://proxy.paxintrade.com/50/https://img.paxintrade.com/${comment.user?.Photo}`}
               alt={comment.user?.Name}
             />
           </Avatar>

@@ -22,12 +22,12 @@ const nextConfig = {
   },
   reactStrictMode: true,
   images: {
-    domains: ['img.paxintrade.online'], // Добавьте этот домен
+    domains: ['img.paxintrade.com'], // Добавьте этот домен
 
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'proxy.paxintrade.online',
+        hostname: 'proxy.paxintrade.com',
       },
     ],
   },

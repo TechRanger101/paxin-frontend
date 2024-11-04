@@ -27,7 +27,7 @@ const saveScrollPosition = () => {
 
 const BlogCard = ({ blog }: BlogCardProps) => {
   const heroImage = blog.photos?.[0]?.files?.[0]?.path
-    ? `https://img.paxintrade.online/${blog.photos[0].files[0].path}`
+    ? `https://img.paxintrade.com/${blog.photos[0].files[0].path}`
     : '/default-hero.jpg'; // Фон по умолчанию, если нет изображения
 
   const location = blog.City?.[0]?.Translations?.[0]?.Name || 'Не указано';

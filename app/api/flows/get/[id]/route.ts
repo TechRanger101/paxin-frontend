@@ -82,13 +82,13 @@ export async function GET(req: NextRequest) {
           : 0,
       gallery: blogData.data[0].photos[0].files.map((file: any) => {
         return {
-          original: `https://proxy.paxintrade.online/400/https://img.paxintrade.online/${file.path}`,
-          thumbnail: `https://proxy.paxintrade.online/50/https://img.paxintrade.online/${file.path}`,
+          original: `https://proxy.paxintrade.com/400/https://img.paxintrade.com/${file.path}`,
+          thumbnail: `https://proxy.paxintrade.com/50/https://img.paxintrade.com/${file.path}`,
         };
       }),
       author: {
         username: blogData.data[0].user.name,
-        avatar: `https://proxy.paxintrade.online/100/https://img.paxintrade.online/${blogData.data[0].user.photo}`,
+        avatar: `https://proxy.paxintrade.com/100/https://img.paxintrade.com/${blogData.data[0].user.photo}`,
         bio: blogData.data[0].userProfile.multilangtitle[
           locale.charAt(0).toUpperCase() + locale.slice(1)
         ],

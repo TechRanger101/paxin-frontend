@@ -41,7 +41,7 @@ export function AvatarWithMenu({ user }: AvatarWithMenuProps) {
     })
     .then((response) => {
       if (response.ok) {
-        deleteCookie('access_token', '.paxintrade.online');
+        deleteCookie('access_token', '.paxintrade.com');
         signOut({ callbackUrl: '/' });
       } else {
         console.error('err:', response.statusText);
@@ -56,7 +56,7 @@ export function AvatarWithMenu({ user }: AvatarWithMenuProps) {
       <DropdownMenuTrigger asChild>
         <Avatar className='mr-3'>
           <AvatarImage
-            src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${user?.avatar}`}
+            src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${user?.avatar}`}
             alt={user?.username}
           />
           <AvatarFallback>{getInitials(user?.username || '')}</AvatarFallback>
@@ -70,7 +70,7 @@ export function AvatarWithMenu({ user }: AvatarWithMenuProps) {
           >
             <Avatar>
               <AvatarImage
-                src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${user?.avatar}`}
+                src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${user?.avatar}`}
                 alt={user?.username}
               />
               <AvatarFallback>

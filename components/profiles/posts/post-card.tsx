@@ -250,7 +250,7 @@ export function PostCard({
                 <CarouselItem key={index}>
                   <div className='relative h-72 w-full'>
                     <Image
-                      src={`https://proxy.paxintrade.online/400/https://img.paxintrade.online/${image.path}`}
+                      src={`https://proxy.paxintrade.com/400/https://img.paxintrade.com/${image.path}`}
                       alt='preview image'
                       style={{ objectFit: 'cover' }}
                       fill

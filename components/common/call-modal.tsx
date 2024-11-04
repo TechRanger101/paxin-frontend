@@ -112,7 +112,7 @@ export default function CallModal({ children, callee }: CallModalProps) {
           <div className='flex flex-col items-center justify-center gap-2'>
             <Avatar className='size-24'>
               <AvatarImage
-                src={`https://proxy.paxintrade.online/150/https://img.paxintrade.online/${user?.avatar}`}
+                src={`https://proxy.paxintrade.com/150/https://img.paxintrade.com/${user?.avatar}`}
                 alt={user?.username || ''}
               />
               <AvatarFallback>

@@ -28,12 +28,12 @@ export async function GET(req: NextRequest) {
         //   username: item.User.Name,
         //   online: item.User.online,
         //   telegram: item.User.TelegramActivated ? item.User.TelegramName : '',
-        //   avatar: `https://proxy.paxintrade.online/100/https://img.paxintrade.online/${item.User.Photo}`,
+        //   avatar: `https://proxy.paxintrade.com/100/https://img.paxintrade.com/${item.User.Photo}`,
         // },
         slug: item.Slug,
         hero:
           item.photos?.length > 0 && item.photos[0].files?.length > 0
-            ? `https://proxy.paxintrade.online/400/https://img.paxintrade.online/${item.photos[0].files[0].path}`
+            ? `https://proxy.paxintrade.com/400/https://img.paxintrade.com/${item.photos[0].files[0].path}`
             : '',
         price: item.Total,
         regularpost: item.User.Role === 'user',

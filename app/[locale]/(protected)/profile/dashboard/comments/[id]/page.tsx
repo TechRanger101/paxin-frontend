@@ -130,7 +130,7 @@ export default function CommentPage() {
                 <div className="flex items-center space-x-2 mb-2">
                     <Avatar className="mr-3">
                         <AvatarImage
-                            src={`https://proxy.paxintrade.online/50/https://img.paxintrade.online/${comment.user?.Photo}`}
+                            src={`https://proxy.paxintrade.com/50/https://img.paxintrade.com/${comment.user?.Photo}`}
                             alt={comment.user?.Name}
                         />
                     </Avatar>

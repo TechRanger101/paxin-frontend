@@ -265,9 +265,9 @@ export default function DashboardPage() {
   const renderFile = (file: any, index: number) => {
     const { url, filename } = file;
     const sanitizedUrl = url.replace('../server-data/img-store/', '');
-    const fileUrlImage = `https://proxy.paxintrade.online/256/https://img.paxintrade.online/${sanitizedUrl}`;
-    const fileUrlIAudio = `https://img.paxintrade.online/${sanitizedUrl}`;
-    const fileUrl = `https://img.paxintrade.online/${sanitizedUrl}`;
+    const fileUrlImage = `https://proxy.paxintrade.com/256/https://img.paxintrade.com/${sanitizedUrl}`;
+    const fileUrlIAudio = `https://img.paxintrade.com/${sanitizedUrl}`;
+    const fileUrl = `https://img.paxintrade.com/${sanitizedUrl}`;
 
     if (
       url.endsWith('.jpeg') ||
@@ -809,7 +809,7 @@ export default function DashboardPage() {
                       <Avatar className='mr-0'>
                         <Link href={`/profiles/${post?.user?.Name}`} passHref>
                           <AvatarImage
-                            src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${post?.user?.Photo}`}
+                            src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${post?.user?.Photo}`}
                             alt={post?.user?.Photo}
                           />
                         </Link>
@@ -881,8 +881,8 @@ export default function DashboardPage() {
                                     '../server-data/img-store/',
                                     ''
                                   );
-                                  const fileUrlImage = `https://proxy.paxintrade.online/256/https://img.paxintrade.online/${sanitizedUrl}`;
-                                  const fileUrl = `https://img.paxintrade.online/${sanitizedUrl}`;
+                                  const fileUrlImage = `https://proxy.paxintrade.com/256/https://img.paxintrade.com/${sanitizedUrl}`;
+                                  const fileUrl = `https://img.paxintrade.com/${sanitizedUrl}`;
 
                                   if (
                                     url.endsWith('.jpeg') ||
@@ -927,8 +927,8 @@ export default function DashboardPage() {
                               '../server-data/img-store/',
                               ''
                             );
-                            const fileUrlImage = `https://proxy.paxintrade.online/256/https://img.paxintrade.online/${sanitizedUrl}`;
-                            const fileUrl = `https://img.paxintrade.online/${sanitizedUrl}`;
+                            const fileUrlImage = `https://proxy.paxintrade.com/256/https://img.paxintrade.com/${sanitizedUrl}`;
+                            const fileUrl = `https://img.paxintrade.com/${sanitizedUrl}`;
 
                             if (
                               url.endsWith('.jpeg') ||

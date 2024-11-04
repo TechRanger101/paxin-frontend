@@ -917,7 +917,7 @@ export default function SettingPage() {
               <img
                 onClick={() => setOpenModalPhoto(true)}
                 className='h-20 w-20 rounded-full'
-                src={`https://proxy.paxintrade.online/100/https://img.paxintrade.online/${user?.avatar}`}
+                src={`https://proxy.paxintrade.com/100/https://img.paxintrade.com/${user?.avatar}`}
                 alt='User Avatar'
               />
               <NewPhoto
@@ -1737,7 +1737,7 @@ export default function SettingPage() {
                         gallery?.files.map((file: any) => (
                           <PreviewImage
                             key={file.path}
-                            src={`https://proxy.paxintrade.online/400/https://img.paxintrade.online/${file.path}`}
+                            src={`https://proxy.paxintrade.com/400/https://img.paxintrade.com/${file.path}`}
                             onRemove={() => {
                               removeGallery(file.path);
                             }}

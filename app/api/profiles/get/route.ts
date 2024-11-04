@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
         avatar:
           item.profile?.photos?.length > 0 &&
           item.profile.photos[0]?.files?.length > 0
-            ? `https://proxy.paxintrade.online/300/https://img.paxintrade.online/${item.profile.photos[0].files[0].path}`
+            ? `https://proxy.paxintrade.com/300/https://img.paxintrade.com/${item.profile.photos[0].files[0].path}`
             : '',
         tags: item.profile?.Hashtags?.map((tag: any) => tag.Hashtag) || [],
         cities:
