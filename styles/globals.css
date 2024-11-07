@@ -182,7 +182,7 @@
 
     --card-foreground: 222.2 47.4% 11.2%;
 
-    --primary: 219.43 100% 72.55%;
+    --primary: 166.2 100% 30.6%;
     --primary-foreground: 0 0% 100%;
     --chevron: 0 0% 50%;
 
@@ -226,7 +226,7 @@
 
     --card-foreground: 213 31% 91%;
 
-    --primary: 219.43 100% 72.55%;
+    --primary: 166.2 100% 30.6%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 10%;
@@ -292,19 +292,17 @@
       margin-right: 10px; /* Добавляем отступ справа для разделения */
     }
   }
-
   .bg-primary {
-    background: linear-gradient(90deg, #73a3ff, #397bfa 100%),
+    background: linear-gradient(90deg, #00b887 0%, #01b6d3 100%),
       linear-gradient(7deg, #7b2bcc 21.22%, #2296f3 88.72%);
   }
-
   .text-gradient {
     background: linear-gradient(
       90deg,
       #575757 0%,
       rgba(82, 93, 90, 0.98) 36.43%,
-      #73a3ff,
-      #397bfa
+      #00b887,
+      #00b887
     );
     background-clip: text;
     -webkit-background-clip: text;
@@ -316,8 +314,8 @@
       90deg,
       #fff 0%,
       rgba(255, 255, 255, 0.98) 36.43%,
-      #73a3ff,
-      #397bfa
+      #00b887,
+      #00b887
     );
     background-clip: text;
     -webkit-background-clip: text;
@@ -386,7 +384,7 @@
 .btn {
   position: relative;
   margin: auto;
-  background: linear-gradient(#73a3ff, #73a3ff, #73a3ff);
+  background: linear-gradient(#00b887, #01b6d3, #01b6d3);
 
   background-size: auto, auto;
   background-size: 35%, 100%;
@@ -431,30 +429,30 @@
 
 @keyframes glow {
   0% {
-    border-color: #73a3ff;
+    border-color: #00b887;
     box-shadow:
       0 0 5px rgba(0, 255, 0, 0.2),
       inset 0 0 5px rgba(0, 255, 0, 0.1),
       0 0px 0 rgb(51, 102, 153);
   }
   100% {
-    border-color: #73a3ff;
+    border-color: #00b887;
     box-shadow:
-      0 0 20px rgba(0, 157, 255, 0.6),
-      inset 0 0 10px rgba(0, 157, 255, 0.4),
-      0 0px 0 rgb(51, 97, 153);
+      0 0 20px rgba(0, 255, 0, 0.6),
+      inset 0 0 10px rgba(0, 255, 0, 0.4),
+      0 0px 0 #393;
   }
 }
 
 input:focus {
   -webkit-animation: glow 800ms ease-out infinite alternate;
   animation: glow 800ms ease-out infinite alternate;
-  border-color: #73a3ff;
+  border-color: #00b887;
   box-shadow:
     0 0 5px rgba(0, 255, 0, 0.2),
     inset 0 0 5px rgba(0, 255, 0, 0.1),
-    0 0px 0 rgb(51, 93, 153);
-  color: #73a3ff;
+    0 0px 0 #393;
+  color: #02b79d;
   outline: none;
 }
 
@@ -504,9 +502,9 @@ textarea {
   position: relative;
   background: linear-gradient(
     90deg,
-    #73a3ff 0.01%,
-    #73a3ff 50.01%,
-    #73a3ff 100%
+    #01b6d3 0.01%,
+    #00b887 50.01%,
+    #01b6d3 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -517,10 +515,10 @@ textarea {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 1px;
-  background: linear-gradient(90deg, #73a3ff 0%, #73a3ff 100%),
-    linear-gradient(7deg, #73a3ff 21.22%, #73a3ff 88.72%);
+  background: linear-gradient(90deg, #00b887 0%, #01b6d3 100%),
+    linear-gradient(7deg, #7b2bcc 21.22%, #2296f3 88.72%);
   mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -532,17 +530,16 @@ textarea {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 1px;
-  background: linear-gradient(90deg, #73a3ff 0%, #73a3ff 100%),
-    linear-gradient(7deg, #73a3ff 21.22%, #73a3ff 88.72%);
+  background: linear-gradient(90deg, #00b887 0%, #01b6d3 100%),
+    linear-gradient(7deg, #7b2bcc 21.22%, #2296f3 88.72%);
   mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
-
 iframe {
   width: 100%;
   height: 500px;
@@ -1904,7 +1901,7 @@ iframe {
 
 .image-gallery-thumbnail.active,
 .image-gallery-thumbnail:focus {
-  border: 4px solid #73a3ff !important;
+  border: 4px solid #019c78 !important;
 }
 /* 
 .filtersButton {
@@ -1917,7 +1914,7 @@ iframe {
 } */
 
 .image-gallery-icon:hover {
-  color: #73a3ff !important;
+  color: #019c78 !important;
 }
 
 .c-bg {

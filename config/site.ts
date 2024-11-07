@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'ONLINE',
+  name: 'Paxintrade',
   description: 'Trade streaming network.',
   mainNav: [
     {

@@ -270,10 +270,10 @@ export default function NestedCommentSection({
           <div className='sticky bottom-[70px] ml-[0px] mt-0 w-full p-4 pl-[0px] pr-[0px] md:bottom-[30px]'>
             {quote && (
               <ScrollArea>
-                <div className='mb-4 flex items-start space-x-2 rounded-lg border-l-4 border-blue-500 bg-gray-100 p-4 dark:bg-gray-800'>
-                  <FaReply className='text-blue-500 dark:text-blue-400' />
+                <div className='mb-4 flex items-start space-x-2 rounded-lg border-l-4 border-green-500 bg-gray-100 p-4 dark:bg-gray-800'>
+                  <FaReply className='text-green-500 dark:text-green-400' />
                   <div>
-                    <p className='font-bold text-blue-500 dark:text-blue-400'>
+                    <p className='font-bold text-green-500 dark:text-green-400'>
                       В ответ {quote.name}
                     </p>
                     <p className='text-black dark:text-white'>

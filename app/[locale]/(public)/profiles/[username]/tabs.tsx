@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
@@ -22,18 +22,18 @@ export default function Tabs({ tabs, activeTab }: any) {
 
   return (
     <div>
-      <div className="tabs pb-4">
+      <div className='tabs pb-4'>
         {tabs.map((tab: any) => (
           <button
             key={tab.label}
             onClick={() => handleTabClick(tab.label)}
-            className={`p-4 ${currentTab === tab.label ? 'border-b-2 border-blue-500' : ''}`}
+            className={`p-4 ${currentTab === tab.label ? 'border-b-2 border-green-500' : ''}`}
           >
             {tab.label}
           </button>
         ))}
       </div>
-      <div className="tab-content">
+      <div className='tab-content'>
         {tabs.map(
           (tab: any) =>
             currentTab === tab.label && (

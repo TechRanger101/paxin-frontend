@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "My Russia Online",
+    "title": "Paxintrade",
     "description": "A platform that combines trading, social networks, and streaming based on blockchain technologies. Reliable transactions, live broadcasts, and an active community – everything for your successful online presence."
   },
   "main": {
@@ -138,7 +138,7 @@
     "password": "Password",
     "room_id": "Room ID",
     "explore_paxintrade": "Explore Paxintrade",
-    "empowering_connections_metaverse": "Trade streaming network in Russia",
+    "empowering_connections_metaverse": "Paxintrade",
     "empowering_connections_metaverse_description": "in a live stream throughout the country",
     "empowering_connections_metaverse_description2": "Empowered by artificial intelligence",
     "s_1": "Meeting rooms",

@@ -178,7 +178,7 @@ function FlowCard(profile: FlowCardProps) {
             )} */}
             <Badge
               variant='default'
-              className='flex flex-col !items-center !justify-center border-none bg-gradient-to-r from-[#73a2ff] to-[#73a2ff] p-2 text-white'
+              className='flex flex-col !items-center !justify-center border-none bg-gradient-to-r from-[#00b887] to-[#01b6d3] p-2 text-white'
             >
               <Eye className='mr-0 size-4 text-white' />
               {review.totalviews}

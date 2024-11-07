@@ -55,8 +55,14 @@ export function MainNav({ items }: MainNavProps) {
           alt='logo'
           width={24.44}
           height={24.44}
-          className='size-[24.44px]'
-          priority
+          className='size-[24.44px] dark:hidden'
+        />
+        <Image
+          src='/logo-white.svg'
+          alt='logo'
+          width={24.44}
+          height={24.44}
+          className='hidden size-[24.44px] dark:block'
         />
         <span className='inline-block font-satoshi text-xs font-semibold sm:hidden lg:inline-block'>
           {siteConfig.name}

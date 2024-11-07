@@ -57,7 +57,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
             <div className='absolute right-4 top-4 flex space-x-2'>
               <Badge
                 variant='default'
-                className='bg-gradient-to-r from-[#73a2ff] to-[#73a2ff] p-2 text-white'
+                className='bg-gradient-to-r from-[#00b887] to-[#01b6d3]  p-2 text-white'
               >
                 Коммерческое предложение
               </Badge>

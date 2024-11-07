@@ -93,7 +93,7 @@ export default function HomePage() {
       {(!isCTAVisible || isScrolledDown) && (
         <button
           onClick={toggleCTAVisibility}
-          className={`fixed right-4 z-50 rounded-full bg-blue-500 p-4 text-white shadow-lg transition-all ${
+          className={`fixed right-4 z-50 rounded-full bg-green-500 p-4 text-white shadow-lg transition-all ${
             isCTAVisible ? 'bottom-[100px] md:bottom-4' : 'bottom-4'
           }`}
         >
