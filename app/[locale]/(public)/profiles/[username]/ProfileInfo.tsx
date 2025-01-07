@@ -38,6 +38,10 @@ const ProfileDetailsComponent = dynamic(() => import('./clientComponent'), {
   ssr: false,
 });
 
+const VideoPlayer = dynamic(() => import('@/components/VideoPlayerHls'), {
+  ssr: false,
+});
+
 const ProfileInfo = ({ profileDetails, userId, t, params }: any) => (
   <div className='grid grid-cols-1 gap-4 md:grid-cols-3 xl:grid-cols-4'>
     <div className=''>
@@ -327,6 +331,10 @@ const ProfileInfo = ({ profileDetails, userId, t, params }: any) => (
         </div>
       </div>
       <div className='space-y-3'>
+        <VideoPlayer
+          src='https://app.ddrw.org/api/v1/streams/bd36a973-cb7c-44e0-8c7f-fa9dcea45833/stream.m3u8'
+          poster='https://cln.net/bitrix/templates/main-bootstrap/img/bg-winter-1.jpg'
+        />
         {profileDetails.additionalinfo && (
           <div>
             <div className='pb-2 text-lg font-semibold'>
