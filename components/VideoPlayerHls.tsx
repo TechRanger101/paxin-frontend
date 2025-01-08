@@ -17,12 +17,8 @@ type VideoPlayerProps = {
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ src, poster }) => {
   return (
     <MediaPlayer
-      streamType='live'
       title='Custom title'
-      src={{
-        src: 'https://app.ddrw.org/api/v1/streams/d8e8f724-9954-48cc-9463-cc3d3e46b0fd/stream.m3u8',
-        type: 'application/vnd.apple.mpegurl',
-      }}
+      src='https://app.ddrw.org/api/v1/streams/d8e8f724-9954-48cc-9463-cc3d3e46b0fd/stream.m3u8'
       autoPlay
       playsInline
     >
